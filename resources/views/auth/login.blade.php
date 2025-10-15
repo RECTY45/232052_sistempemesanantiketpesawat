@@ -34,6 +34,7 @@
   <link rel="stylesheet" href="{{ asset('vendor/css/core.css') }}" class="template-customizer-core-css" />
   <link rel="stylesheet" href="{{ asset('vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
   <link rel="stylesheet" href="{{ asset('css/demo.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/auth.css') }}" />
 
   <!-- Vendors CSS -->
   <link rel="stylesheet" href="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
@@ -51,7 +52,7 @@
 
   <div class="container-xxl d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="authentication-wrapper authentication-basic container d-flex justify-content-center">
-      <div class="authentication-inner" style="max-width: 420px; width: 100%;">
+      <div class="authentication-inner">
         <!-- Register -->
         <div class="card shadow-lg border-0">
           <div class="card-body">

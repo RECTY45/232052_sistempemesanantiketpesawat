@@ -48,7 +48,6 @@
             </a>
         </li>
 
-
         <!-- PROFILE -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">LOGOUT</span></li>
         <form id="LogoutForm" action="{{ route('logout') }}" method="POST">

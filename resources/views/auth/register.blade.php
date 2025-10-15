@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/css/core.css') }}" class="template-customizer-core-css" />
     <link rel="stylesheet" href="{{ asset('vendor/css/theme-default.css') }}" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="{{ asset('css/demo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/auth.css') }}" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
@@ -45,32 +46,34 @@
     <!-- Content -->
 
     <div class="container-xxl d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-        <div class="authentication-wrapper authentication-basic container d-flex justify-content-center">
+        <div class="authentication-wrapper authentication-basic container d-flex justify-content-center align-items-center">
             <div class="authentication-inner" style="max-width: 440px; width: 100%;">
                 <!-- Register -->
-                <div class="card shadow-lg border-0">
-                    <div class="card-body">
+                <div class="card shadow-lg border-0 rounded-4" style="overflow: hidden;">
+                    <div class="card-body p-4">
+
                         @if (session()->has('success'))
-                        <div class="alert-success p-3 rounded" id="alert-success">
+                        <div class="alert alert-success p-3 rounded" id="alert-success">
                             {{ session('success') }}
                         </div>
                         @endif
+
                         @if (session()->has('error'))
                         <div class="alert alert-danger alert-dismissible fade show p-3" role="alert" id="error-alert">
                             {{ session('error') }}
-                            <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="close"></button>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         @endif
 
                         <!-- Logo -->
                         <div class="app-brand justify-content-center mb-3">
-                            <a href="index.html" class="app-brand-link gap-2 text-decoration-none">
+                            <a href="#" class="app-brand-link gap-2 text-decoration-none">
                                 <span class="app-brand-logo demo">
                                     <img
                                         src="{{ asset('img/favicon/travelo-logo.svg') }}"
                                         alt="Travelo Logo"
                                         class="block mx-auto pb-2"
-                                        style="width: 180px; height: auto;">
+                                        style="width: 170px; height: auto;">
                                 </span>
                             </a>
                         </div>
@@ -79,7 +82,7 @@
                         <h4 class="mb-2 text-center">Register to {{ $name }} ‹</h4>
                         <p class="mb-4 text-center">Please sign up to create your account and start your adventure</p>
 
-                        <form id="formAuthentication" class="mb-3" action="{{ @route('register.store') }}" method="POST">
+                        <form id="formAuthentication" class="mb-3" action="{{ route('register.store') }}" method="POST">
                             @csrf
 
                             <div class="mb-3">
@@ -90,7 +93,7 @@
                                     id="name"
                                     name="name"
                                     placeholder="Masukkan Nama Anda"
-                                    autofocus />
+                                    autofocus>
                                 @error('name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -103,7 +106,7 @@
                                     class="form-control @error('email') is-invalid @enderror"
                                     id="email"
                                     name="email"
-                                    placeholder="Masukkan Email" />
+                                    placeholder="Masukkan Email Anda">
                                 @error('email')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -118,7 +121,7 @@
                                         class="form-control @error('password') is-invalid @enderror"
                                         name="password"
                                         placeholder="••••••••••••"
-                                        aria-describedby="password" />
+                                        aria-describedby="password">
                                     @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
@@ -126,11 +129,9 @@
                                 </div>
                             </div>
 
-                            <div class="mb-3">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                                </div>
+                            <div class="mb-3 form-check">
+                                <input class="form-check-input" type="checkbox" id="remember-me">
+                                <label class="form-check-label" for="remember-me"> Remember Me </label>
                             </div>
 
                             <div class="mb-3">
@@ -144,6 +145,7 @@
                                 <span>Sign in here</span>
                             </a>
                         </p>
+
                     </div>
                 </div>
                 <!-- /Register -->
