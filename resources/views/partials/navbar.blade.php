@@ -24,9 +24,8 @@
                 <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                    <div class="avatar avatar-online">
-                        <img src="{{ asset('img/favicon/travelo-logo.svg') }}" style="width: 80px; height: auto;" alt class="w-px-40 h-auto rounded-circle" />
-                    </div>
+                    <img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim(Auth()->user()->email))) }}?s=40&d=identicon"
+                        alt="avatar" class="rounded-circle me-2" width="40" height="40">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
@@ -34,30 +33,31 @@
                             <div class="d-flex">
                                 <div class="flex-shrink-0 me-3">
                                     <div class="avatar avatar-online">
-                                        <img src="{{ asset('img/favicon/travelo-logo.svg') }}" style="width: 80px; height: auto;" alt
-                                            class="w-px-40 h-auto rounded-circle" />
+                                        <img src="https://www.gravatar.com/avatar/{{ md5(strtolower(trim(Auth()->user()->email))) }}?s=40&d=identicon"
+                                            alt="avatar" class="rounded-circle me-2" width="40" height="40">
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">{{Auth()->user()->name}}</span>
-                                    <small class="text-muted">{{Auth()->user()->roles}}</small>
+                                    <span class="fw-semibold d-block">{{ Auth()->user()->name }}</span>
+                                    <small class="text-muted">{{ Auth()->user()->roles }}</small>
                                 </div>
                             </div>
                         </a>
                     </li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <form id="LogoutForm" action="{{@route('logout')}}" method="POST">
-                        @csrf
-                    </form>
-                    <li>
-                        <a class="dropdown-item" href="" onclick="event.preventDefault(); document.getElementById('LogoutForm').submit();">
-                            <i class="bx bx-power-off me-2"></i>
-                            <span class="align-middle">Log Out</span>
-                        </a>
-                    </li>
-                </ul>
+                    <div class="dropdown-divider"></div>
             </li>
+            <form id="LogoutForm" action="{{ @route('logout') }}" method="POST">
+                @csrf
+            </form>
+            <li>
+                <a class="dropdown-item" href=""
+                    onclick="event.preventDefault(); document.getElementById('LogoutForm').submit();">
+                    <i class="bx bx-power-off me-2"></i>
+                    <span class="align-middle">Log Out</span>
+                </a>
+            </li>
+        </ul>
+        </li>
         </ul>
     </div>
 </nav>
