@@ -37,7 +37,7 @@
                                 @if ($item->roles == 'admin')
                                     <span class="badge bg-success text-uppercase px-3 py-2">admin</span>
                                 @else
-                                    <span class="badge bg-primary text-uppercase px-3 py-2">developer</span>
+                                    <span class="badge bg-primary text-uppercase px-3 py-2">customer</span>
                                 @endif
                             </td>
                             <td>{{ $item->email }}</td>
