@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\ActivateAccountController;
 use App\Http\Controllers\DashController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,6 +37,14 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
     route::get('/', [DashController::class, 'dash'])->name('dash.index');
+});
+
+Route::group(['prefix' => 'pengguna', 'middleware' => ['auth']], function () {
+    route::get('/', [UserController::class, 'index'])->name('user.index');
+    route::get('/create', [UserController::class, 'create'])->name('user.create');
+    route::post('/', [UserController::class, 'store'])->name('user.store');
+    route::get('/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+   route::delete('/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 });
 
 Route::get('/activate/{token}', [ActivateAccountController::class, 'activate'])->name('activate.account');

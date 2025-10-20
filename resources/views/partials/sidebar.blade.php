@@ -47,6 +47,17 @@
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
+        @if (@auth()->user()->roles == 'admin')
+        <!-- MASTER -->
+        <li class="menu-header small text-uppercase"><span class="menu-header-text">Master</span></li>
+        <!-- USER -->
+        <li class="menu-item {{request()->routeIs('user.index')  ? 'active' : ''}} ">
+            <a href="{{route('user.index')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Basic">Pengguna</div>
+            </a>
+        </li>
+        @endif
 
         <!-- PROFILE -->
         <li class="menu-header small text-uppercase"><span class="menu-header-text">LOGOUT</span></li>

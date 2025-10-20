@@ -42,12 +42,13 @@ class RegisterController extends Controller
         ]);
 
         try {
-            // Buat user baru (status nonaktif & generate token aktivasi)
+            
             $user = User::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
                 'password' => bcrypt($validatedData['password']),
                 'status' => 'nonaktif',
+                'roles' => 'customer',
                 'activation_token' => Str::random(64),
             ]);
 
