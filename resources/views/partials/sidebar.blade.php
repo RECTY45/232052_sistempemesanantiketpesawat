@@ -22,7 +22,8 @@
                         <g id="Brand-Logo" transform="translate(-27.000000, -15.000000)">
                             <g id="Icon" transform="translate(27.000000, 15.000000)">
                                 <g id="Mask" transform="translate(0.000000, 8.000000)">
-                                    <img class="mb-5 pt-2" src="{{asset('img/favicon/travelo-logo.svg')}}" style="width: 90px; height: auto;" alt="">
+                                    <img class="mb-5 pt-2" src="{{asset('img/favicon/travelo-logo.svg')}}"
+                                        style="width: 90px; height: auto;" alt="">
                                 </g>
                             </g>
                         </g>
@@ -31,8 +32,7 @@
             </span>
         </a>
 
-        <a href="javascript:void(0);"
-            class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+        <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
             <i class="bx bx-chevron-left bx-sm align-middle"></i>
         </a>
     </div>
@@ -47,16 +47,77 @@
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
         </li>
+
         @if (@auth()->user()->roles == 'admin')
-        <!-- MASTER -->
-        <li class="menu-header small text-uppercase"><span class="menu-header-text">Master</span></li>
-        <!-- USER -->
-        <li class="menu-item {{request()->routeIs('user.index')  ? 'active' : ''}} ">
-            <a href="{{route('user.index')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
-                <div data-i18n="Basic">Pengguna</div>
-            </a>
-        </li>
+
+            <!-- MASTER DATA -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Master Data</span></li>
+
+            <!-- AIRLINES -->
+            <li class="menu-item {{request()->routeIs('admin.airlines.*') ? 'active' : ''}}">
+                <a href="{{route('admin.airlines.index')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-plane-alt"></i>
+                    <div data-i18n="Basic">Maskapai</div>
+                </a>
+            </li>
+
+            <!-- AIRPORTS -->
+            <li class="menu-item {{request()->routeIs('admin.airports.*') ? 'active' : ''}}">
+                <a href="{{route('admin.airports.index')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-buildings"></i>
+                    <div data-i18n="Basic">Bandara</div>
+                </a>
+            </li>
+
+            <!-- AIRCRAFT -->
+            <li class="menu-item {{request()->routeIs('admin.aircraft.*') ? 'active' : ''}}">
+                <a href="{{route('admin.aircraft.index')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-paper-plane"></i>
+                    <div data-i18n="Basic">Pesawat</div>
+                </a>
+            </li>
+
+            <!-- FLIGHT MANAGEMENT -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Penerbangan</span></li>
+
+            <!-- FLIGHTS -->
+            <li class="menu-item {{request()->routeIs('admin.flights.*') ? 'active' : ''}}">
+                <a href="{{route('admin.flights.index')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-trip"></i>
+                    <div data-i18n="Basic">Jadwal Penerbangan</div>
+                </a>
+            </li>
+
+            <!-- BOOKING MANAGEMENT -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Pemesanan</span></li>
+
+            <!-- BOOKINGS -->
+            <li class="menu-item {{request()->routeIs('admin.bookings.*') ? 'active' : ''}}">
+                <a href="{{route('admin.bookings.index')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-shopping-bag"></i>
+                    <div data-i18n="Basic">Pemesanan Tiket</div>
+                </a>
+            </li>
+
+            <!-- PAYMENTS -->
+            <li class="menu-item {{request()->routeIs('admin.payments.*') ? 'active' : ''}}">
+                <a href="{{route('admin.payments.index')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-credit-card"></i>
+                    <div data-i18n="Basic">Pembayaran</div>
+                </a>
+            </li>
+
+            <!-- USER MANAGEMENT -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Pengguna</span></li>
+
+            <!-- USERS -->
+            <li class="menu-item {{request()->routeIs('user.index') ? 'active' : ''}}">
+                <a href="{{route('user.index')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-user"></i>
+                    <div data-i18n="Basic">Kelola Pengguna</div>
+                </a>
+            </li>
+
         @endif
 
         <!-- PROFILE -->
@@ -65,8 +126,8 @@
             @csrf
         </form>
         <li class="menu-item">
-            <a onclick="event.preventDefault(); document.getElementById('LogoutForm').submit()"
-                target="_blank" class="menu-link" href="">
+            <a onclick="event.preventDefault(); document.getElementById('LogoutForm').submit()" target="_blank"
+                class="menu-link" href="">
                 <i class="menu-icon tf-icons bx bx-log-out-circle"></i>
                 <div data-i18n="Analytics">LOGOUT</div>
             </a>
