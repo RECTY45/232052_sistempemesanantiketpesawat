@@ -62,7 +62,7 @@
 
                         <div class="row">
                             <!-- Model -->
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <label for="model" class="form-label">Model Pesawat <span class="text-danger">*</span></label>
                                 <input type="text" 
                                        class="form-control @error('model') is-invalid @enderror" 
@@ -74,57 +74,68 @@
                                 @error('model')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                                <small class="text-muted">Masukkan model pesawat lengkap dengan tipe (contoh: Boeing 737-800, Airbus A320-200)</small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <!-- Economy Seats -->
+                            <div class="col-md-4 mb-3">
+                                <label for="economy_seats" class="form-label">Kursi Ekonomi <span class="text-danger">*</span></label>
+                                <input type="number" class="form-control @error('economy_seats') is-invalid @enderror"
+                                       id="economy_seats" 
+                                       name="economy_seats" 
+                                       value="{{ old('economy_seats', $aircraft->economy_seats) }}"
+                                       min="0" 
+                                       placeholder="Contoh: 160" 
+                                       required>
+                                @error('economy_seats')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                             </div>
 
-                            <!-- Manufacturer -->
-                            <div class="col-md-6 mb-3">
-                                <label for="manufacturer" class="form-label">Pabrik Pembuat <span class="text-danger">*</span></label>
-                                <select class="form-select @error('manufacturer') is-invalid @enderror" 
-                                        id="manufacturer" 
-                                        name="manufacturer" 
-                                        required>
-                                    <option value="">Pilih Pabrik</option>
-                                    <option value="Boeing" {{ old('manufacturer', $aircraft->manufacturer) == 'Boeing' ? 'selected' : '' }}>Boeing</option>
-                                    <option value="Airbus" {{ old('manufacturer', $aircraft->manufacturer) == 'Airbus' ? 'selected' : '' }}>Airbus</option>
-                                    <option value="ATR" {{ old('manufacturer', $aircraft->manufacturer) == 'ATR' ? 'selected' : '' }}>ATR</option>
-                                    <option value="Bombardier" {{ old('manufacturer', $aircraft->manufacturer) == 'Bombardier' ? 'selected' : '' }}>Bombardier</option>
-                                    <option value="Embraer" {{ old('manufacturer', $aircraft->manufacturer) == 'Embraer' ? 'selected' : '' }}>Embraer</option>
-                                </select>
-                                @error('manufacturer')
+                            <!-- Business Seats -->
+                            <div class="col-md-4 mb-3">
+                                <label for="business_seats" class="form-label">Kursi Bisnis</label>
+                                <input type="number" class="form-control @error('business_seats') is-invalid @enderror"
+                                       id="business_seats" 
+                                       name="business_seats" 
+                                       value="{{ old('business_seats', $aircraft->business_seats) }}"
+                                       min="0" 
+                                       placeholder="Contoh: 20">
+                                @error('business_seats')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <!-- First Class Seats -->
+                            <div class="col-md-4 mb-3">
+                                <label for="first_class_seats" class="form-label">Kursi First Class</label>
+                                <input type="number" class="form-control @error('first_class_seats') is-invalid @enderror"
+                                       id="first_class_seats" 
+                                       name="first_class_seats"
+                                       value="{{ old('first_class_seats', $aircraft->first_class_seats) }}" 
+                                       min="0" 
+                                       placeholder="Contoh: 8">
+                                @error('first_class_seats')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="row">
-                            <!-- Capacity -->
-                            <div class="col-md-6 mb-3">
-                                <label for="capacity" class="form-label">Kapasitas Penumpang <span class="text-danger">*</span></label>
-                                <input type="number" 
-                                       class="form-control @error('capacity') is-invalid @enderror" 
-                                       id="capacity" 
-                                       name="capacity" 
-                                       value="{{ old('capacity', $aircraft->capacity) }}" 
-                                       min="1" 
-                                       max="1000"
-                                       placeholder="Contoh: 189"
-                                       required>
-                                @error('capacity')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
                             <!-- Status -->
                             <div class="col-md-6 mb-3">
-                                <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-                                <select class="form-select @error('status') is-invalid @enderror" 
-                                        id="status" 
-                                        name="status" 
+                                <label for="is_active" class="form-label">Status <span class="text-danger">*</span></label>
+                                <select class="form-select @error('is_active') is-invalid @enderror" 
+                                        id="is_active"
+                                        name="is_active" 
                                         required>
-                                    <option value="active" {{ old('status', $aircraft->status) == 'active' ? 'selected' : '' }}>Aktif</option>
-                                    <option value="inactive" {{ old('status', $aircraft->status) == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                                    <option value="">Pilih Status</option>
+                                    <option value="1" {{ old('is_active', $aircraft->is_active) == 1 ? 'selected' : '' }}>Aktif</option>
+                                    <option value="0" {{ old('is_active', $aircraft->is_active) == 0 ? 'selected' : '' }}>Tidak Aktif</option>
                                 </select>
-                                @error('status')
+                                @error('is_active')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>

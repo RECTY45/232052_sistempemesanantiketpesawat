@@ -46,9 +46,12 @@ class AircraftController extends Controller
             'economy_seats' => 'required|integer|min:0',
             'business_seats' => 'required|integer|min:0',
             'first_class_seats' => 'required|integer|min:0',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
             'description' => 'nullable|string|max:500'
         ]);
+
+        // Handle is_active checkbox - if not present, set to false, else true
+        $validated['is_active'] = $request->has('is_active') ? (bool) $validated['is_active'] : false;
 
         // Calculate total seats
         $validated['total_seats'] = $validated['economy_seats'] + $validated['business_seats'] + $validated['first_class_seats'];
@@ -91,9 +94,12 @@ class AircraftController extends Controller
             'economy_seats' => 'required|integer|min:0',
             'business_seats' => 'required|integer|min:0',
             'first_class_seats' => 'required|integer|min:0',
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
             'description' => 'nullable|string|max:500'
         ]);
+
+        // Handle is_active checkbox - if not present, set to false
+        $validated['is_active'] = $request->has('is_active') ? (bool) $validated['is_active'] : false;
 
         // Calculate total seats
         $validated['total_seats'] = $validated['economy_seats'] + $validated['business_seats'] + $validated['first_class_seats'];

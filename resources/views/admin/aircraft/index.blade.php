@@ -53,7 +53,7 @@
                                 <tr>
                                     <td>{{ $aircraft->firstItem() + $index }}</td>
                                     <td>
-                                        <span class="badge bg-primary">{{ $item->aircraft_code }}</span>
+                                        <span class="badge bg-primary">{{ $item->registration }}</span>
                                     </td>
                                     <td>
                                         <div class="d-flex flex-column">
@@ -72,12 +72,12 @@
                                     </td>
                                     <td>
                                         <div class="text-center">
-                                            <span class="fw-semibold">{{ $item->capacity }}</span>
+                                            <span class="fw-semibold">{{ $item->total_seats }}</span>
                                             <small class="text-muted d-block">penumpang</small>
                                         </div>
                                     </td>
                                     <td>
-                                        @if($item->status === 'active')
+                                        @if($item->is_active)
                                             <span class="badge bg-success">Aktif</span>
                                         @else
                                             <span class="badge bg-danger">Tidak Aktif</span>
