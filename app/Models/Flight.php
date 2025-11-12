@@ -118,4 +118,63 @@ class Flight extends Model
                 return $this->available_economy_seats;
         }
     }
+
+    public function hasAvailableSeats($class, $count = 1)
+    {
+        return $this->getAvailableSeatsByClass($class) >= $count;
+    }
+
+    public function reserveSeats($class, $count)
+    {
+        if (!$this->hasAvailableSeats($class, $count)) {
+            throw new \Exception('Not enough seats available');
+        }
+
+        switch ($class) {
+            case 'business':
+                $this->available_business_seats -= $count;
+                break;
+            case 'first_class':
+                $this->available_first_class_seats -= $count;
+                break;
+            default:
+                $this->available_economy_seats -= $count;
+                break;
+        }
+
+        return $this->save();
+    }
+
+    public function releaseSeats($class, $count)
+    {
+        $aircraft = $this->aircraft;
+        
+        switch ($class) {
+            case 'business':
+                $this->available_business_seats = min(
+                    $this->available_business_seats + $count,
+                    $aircraft->business_seats
+                );
+                break;
+            case 'first_class':
+                $this->available_first_class_seats = min(
+                    $this->available_first_class_seats + $count,
+                    $aircraft->first_class_seats
+                );
+                break;
+            default:
+                $this->available_economy_seats = min(
+                    $this->available_economy_seats + $count,
+                    $aircraft->economy_seats
+                );
+                break;
+        }
+
+        return $this->save();
+    }
+
+    public function getTotalBookedSeatsAttribute()
+    {
+        return $this->bookings()->where('status', '!=', 'cancelled')->sum('passengers_count');
+    }
 }

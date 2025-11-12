@@ -79,7 +79,9 @@ Route::group(['prefix' => 'pengguna', 'middleware' => ['auth']], function () {
     route::get('/', [UserController::class, 'index'])->name('user.index');
     route::get('/create', [UserController::class, 'create'])->name('user.create');
     route::post('/', [UserController::class, 'store'])->name('user.store');
+    route::get('/{user}', [UserController::class, 'show'])->name('user.show');
     route::get('/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
+    route::put('/{user}', [UserController::class, 'update'])->name('user.update');
     route::delete('/{user}', [UserController::class, 'destroy'])->name('user.destroy');
 });
 

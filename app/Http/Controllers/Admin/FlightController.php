@@ -151,13 +151,19 @@ class FlightController extends Controller
      */
     public function update(Request $request, Flight $flight)
     {
+        // Custom validation rule for departure time
+        $departureValidation = 'required|date|after:departure_time';
+        if (!$flight->departure_time->isPast()) {
+            $departureValidation = 'required|date|after:now';
+        }
+
         $validated = $request->validate([
             'flight_number' => 'required|string|max:20|unique:flights,flight_number,' . $flight->id,
             'airline_id' => 'required|exists:airlines,id',
             'aircraft_id' => 'required|exists:aircraft,id',
             'departure_airport_id' => 'required|exists:airports,id|different:arrival_airport_id',
             'arrival_airport_id' => 'required|exists:airports,id',
-            'departure_time' => 'required|date',
+            'departure_time' => $departureValidation,
             'arrival_time' => 'required|date|after:departure_time',
             'economy_price' => 'required|numeric|min:0',
             'business_price' => 'nullable|numeric|min:0',
@@ -165,12 +171,24 @@ class FlightController extends Controller
             'status' => 'required|in:scheduled,delayed,cancelled,completed',
             'gate' => 'nullable|string|max:10',
             'is_active' => 'boolean'
+        ], [
+            'departure_time.after' => 'Waktu keberangkatan tidak boleh di masa lalu.',
+            'arrival_time.after' => 'Waktu kedatangan harus setelah waktu keberangkatan.',
+            'departure_airport_id.different' => 'Bandara keberangkatan dan kedatangan harus berbeda.'
         ]);
 
         // Calculate duration
         $departure = Carbon::parse($validated['departure_time']);
         $arrival = Carbon::parse($validated['arrival_time']);
         $validated['duration_minutes'] = $departure->diffInMinutes($arrival);
+
+        // Update seat availability if aircraft changed
+        if ($validated['aircraft_id'] != $flight->aircraft_id) {
+            $aircraft = Aircraft::find($validated['aircraft_id']);
+            $validated['available_economy_seats'] = $aircraft->economy_seats;
+            $validated['available_business_seats'] = $aircraft->business_seats;
+            $validated['available_first_class_seats'] = $aircraft->first_class_seats;
+        }
 
         $flight->update($validated);
 

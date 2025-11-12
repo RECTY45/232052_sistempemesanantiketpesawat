@@ -103,15 +103,35 @@ class BookingController extends Controller
     public function update(Request $request, Booking $booking)
     {
         $validated = $request->validate([
-            'status' => 'required|in:pending,confirmed,cancelled'
+            'status' => 'required|in:pending,confirmed,paid,cancelled,completed',
+            'notes' => 'nullable|string|max:1000'
+        ], [
+            'status.required' => 'Status harus dipilih.',
+            'status.in' => 'Status tidak valid.',
+            'notes.max' => 'Catatan maksimal 1000 karakter.'
         ]);
+        
+        // Validasi transisi status
+        $allowedTransitions = [
+            'pending' => ['confirmed', 'cancelled'],
+            'confirmed' => ['paid', 'cancelled'],
+            'paid' => ['completed', 'cancelled'],
+            'cancelled' => [], // Status cancelled tidak bisa diubah
+            'completed' => [] // Status completed tidak bisa diubah
+        ];
+
+        if (!in_array($validated['status'], $allowedTransitions[$booking->status] ?? [])) {
+            return back()->with('error', 'Transisi status tidak valid dari ' . $booking->status . ' ke ' . $validated['status']);
+        }
         
         $booking->update($validated);
         
         $statusText = [
             'pending' => 'menunggu',
             'confirmed' => 'dikonfirmasi', 
-            'cancelled' => 'dibatalkan'
+            'paid' => 'dibayar',
+            'cancelled' => 'dibatalkan',
+            'completed' => 'selesai'
         ];
         
         return redirect()->route('admin.bookings.index')

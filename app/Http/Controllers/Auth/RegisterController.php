@@ -36,29 +36,45 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8|confirmed',
+        ], [
+            'name.required' => 'Nama harus diisi.',
+            'name.max' => 'Nama maksimal 255 karakter.',
+            'email.required' => 'Email harus diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'password.required' => 'Password harus diisi.',
+            'password.min' => 'Password minimal 8 karakter.',
+            'password.confirmed' => 'Konfirmasi password tidak cocok.'
         ]);
 
         try {
-            
             $user = User::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
                 'password' => bcrypt($validatedData['password']),
                 'status' => 'nonaktif',
-                'roles' => 'customer',
+                'roles' => 'user',
                 'activation_token' => Str::random(64),
             ]);
 
-            // Kirim email aktivasi
-            Mail::to($user->email)->send(new ActivationMail($user));
+            // Try to send activation email
+            try {
+                Mail::to($user->email)->send(new ActivationMail($user));
+                $message = 'Register berhasil! Cek email kamu untuk aktivasi akun.';
+            } catch (\Exception $mailException) {
+                // Log email error but don't fail the registration
+                \Log::error('Failed to send activation email to ' . $user->email . ': ' . $mailException->getMessage());
+                $message = 'Register berhasil! Namun email aktivasi gagal dikirim. Hubungi administrator untuk aktivasi manual.';
+            }
 
-            // Redirect dengan pesan sukses
-            return redirect(route('AuthLogin'))->with('success', 'Register berhasil! Cek email kamu untuk aktivasi akun.');
+            return redirect(route('AuthLogin'))->with('success', $message);
+            
         } catch (Exception $e) {
-            return back()->with('error', 'Gagal Register: ' . $e->getMessage());
+            \Log::error('Registration failed: ' . $e->getMessage());
+            return back()->withInput()->with('error', 'Gagal Register: ' . $e->getMessage());
         }
     }
     /**

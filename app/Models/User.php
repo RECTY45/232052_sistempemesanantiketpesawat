@@ -38,4 +38,27 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Relationships
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    // Scopes
+    public function scopeActive($query)
+    {
+        return $query->where('status', 'aktif');
+    }
+
+    public function scopeAdmin($query)
+    {
+        return $query->where('roles', 'admin');
+    }
+
+    // Accessors
+    public function getIsAdminAttribute()
+    {
+        return $this->roles === 'admin';
+    }
 }
