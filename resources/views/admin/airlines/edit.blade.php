@@ -33,8 +33,8 @@
                                 <label for="code" class="form-label">Kode Maskapai <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('code') is-invalid @enderror" id="code"
-                                    name="code" value="{{ old('code', $airline->code) }}" placeholder="Contoh: GA, JT, ID" maxlength="10"
-                                    style="text-transform: uppercase;" required>
+                                    name="code" value="{{ old('code', $airline->code) }}" placeholder="Contoh: GA, JT, ID"
+                                    maxlength="10" style="text-transform: uppercase;" required>
                                 @error('code')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -45,7 +45,8 @@
                                 <label for="name" class="form-label">Nama Maskapai <span
                                         class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                                    name="name" value="{{ old('name', $airline->name) }}" placeholder="Contoh: Garuda Indonesia" required>
+                                    name="name" value="{{ old('name', $airline->name) }}"
+                                    placeholder="Contoh: Garuda Indonesia" required>
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -77,7 +78,8 @@
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Nomor Telepon</label>
                                 <input type="tel" class="form-control @error('phone') is-invalid @enderror" id="phone"
-                                    name="phone" value="{{ old('phone', $airline->phone) }}" placeholder="Contoh: +62-21-2351-9999">
+                                    name="phone" value="{{ old('phone', $airline->phone) }}"
+                                    placeholder="Contoh: +62-21-2351-9999">
                                 @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -90,8 +92,8 @@
                                 <label for="logo" class="form-label">Logo Maskapai</label>
                                 @if($airline->logo)
                                     <div class="mb-2">
-                                        <img src="{{ asset('storage/' . $airline->logo) }}" alt="{{ $airline->name }}" 
-                                             class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
+                                        <img src="{{ asset('storage/' . $airline->logo) }}" alt="{{ $airline->name }}"
+                                            class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
                                         <small class="d-block text-muted">Logo saat ini</small>
                                     </div>
                                 @endif
@@ -100,13 +102,15 @@
                                 @error('logo')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
-                                <small class="text-muted">Format: JPG, JPEG, PNG, GIF. Maksimal 2MB. Biarkan kosong jika tidak ingin mengubah logo.</small>
+                                <small class="text-muted">Format: JPG, JPEG, PNG, GIF. Maksimal 2MB. Biarkan kosong jika
+                                    tidak ingin mengubah logo.</small>
                             </div>
 
                             <div class="mb-3">
                                 <label for="website" class="form-label">Website</label>
                                 <input type="url" class="form-control @error('website') is-invalid @enderror" id="website"
-                                    name="website" value="{{ old('website', $airline->website) }}" placeholder="https://www.example.com">
+                                    name="website" value="{{ old('website', $airline->website) }}"
+                                    placeholder="https://www.example.com">
                                 @error('website')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
