@@ -1,10 +1,12 @@
 /* Nusantara Airways Landing Page Custom Styles */
 
-/* Indonesian/Nusantara Color Variables */
+/* Sneat Purple Theme Color Variables */
 :root {
-    --merah-putih: #FF0000;
+    --primary-purple: #696cff;
+    --secondary-purple: #5f61e6;
+    --light-purple: #e7e7ff;
     --putih-indonesia: #FFFFFF;
-    --emas-nusantara: #FFD700;
+    --accent-gold: #FFD700;
     --biru-laut: #1e40af;
     --hijau-tropis: #059669;
     --coklat-tanah: #92400e;
@@ -29,22 +31,22 @@
     background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFD700' fill-opacity='0.08'%3E%3Cpath d='M20 20c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zM0 0h40v40H0V0z'/%3E%3C/g%3E%3C/svg%3E");
 }
 
-/* Indonesian Gradients */
+/* Purple Gradients */
 .gradient-indonesia {
-    background: linear-gradient(135deg, var(--merah-putih) 0%, var(--putih-indonesia) 50%, var(--merah-putih) 100%);
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--putih-indonesia) 50%, var(--primary-purple) 100%);
 }
 
 .gradient-tropical {
-    background: linear-gradient(135deg, var(--hijau-tropis) 0%, var(--biru-laut) 50%, var(--emas-nusantara) 100%);
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--secondary-purple) 50%, var(--light-purple) 100%);
 }
 
 /* Custom Shadows */
 .shadow-nusantara {
-    box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3), 0 0 0 1px rgba(255, 215, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(105, 108, 255, 0.3), 0 0 0 1px rgba(105, 108, 255, 0.1);
 }
 
 .shadow-merah-putih {
-    box-shadow: 0 10px 30px rgba(255, 0, 0, 0.2), 0 0 0 1px rgba(255, 0, 0, 0.1);
+    box-shadow: 0 10px 30px rgba(105, 108, 255, 0.2), 0 0 0 1px rgba(105, 108, 255, 0.1);
 }
 
 .shadow-tropical {
@@ -58,6 +60,16 @@
 
 .text-shadow-light {
     text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+/* CTA Section Text Styling */
+.cta-section h2,
+.cta-section p {
+    color: #ffffff !important;
+}
+
+.cta-section p {
+    color: rgba(255, 255, 255, 0.95) !important;
 }
 
 /* Animations */
@@ -95,10 +107,10 @@
 
 @keyframes pulse-glow {
     0%, 100% {
-        box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        box-shadow: 0 0 20px rgba(105, 108, 255, 0.3);
     }
     50% {
-        box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+        box-shadow: 0 0 30px rgba(105, 108, 255, 0.6);
     }
 }
 

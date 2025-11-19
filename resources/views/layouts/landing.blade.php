@@ -1,3 +1,5 @@
+Siap Jelajahi Indonesia?
+Bergabunglah dengan ribuan traveler yang telah mempercayai Nusantara Airways untuk menjelajahi keindahan Indonesia
 <!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 
@@ -21,6 +23,23 @@
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-purple': '#696cff',
+                        'secondary-purple': '#5f61e6',
+                        'light-purple': '#e7e7ff',
+                        'accent-gold': '#FFD700',
+                        'biru-laut': '#1e40af',
+                        'hijau-tropis': '#059669',
+                        'coklat-tanah': '#92400e',
+                    }
+                }
+            }
+        }
+    </script>
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -32,11 +51,13 @@
     <link href="{{ asset('css/nusantara.css') }}" rel="stylesheet">
 
     <style>
-        /* Custom Indonesian/Nusantara Colors */
+        /* Custom Sneat Purple Theme Colors */
         :root {
-            --merah-putih: #FF0000;
+            --primary-purple: #696cff;
+            --secondary-purple: #5f61e6;
+            --light-purple: #e7e7ff;
             --putih-indonesia: #FFFFFF;
-            --emas-nusantara: #FFD700;
+            --accent-gold: #FFD700;
             --biru-laut: #1e40af;
             --hijau-tropis: #059669;
             --coklat-tanah: #92400e;
@@ -48,6 +69,16 @@
 
         .font-crimson {
             font-family: 'Crimson Text', serif;
+        }
+
+        /* Ensure CTA section text is white */
+        .cta-section h2,
+        .cta-section p {
+            color: #ffffff !important;
+        }
+
+        .cta-section p {
+            opacity: 0.95;
         }
 
         .bg-batik {
