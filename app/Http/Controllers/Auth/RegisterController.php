@@ -56,7 +56,7 @@ class RegisterController extends Controller
                 'email' => $validatedData['email'],
                 'password' => bcrypt($validatedData['password']),
                 'status' => 'nonaktif',
-                'roles' => 'user',
+                'roles' => 'customer',
                 'activation_token' => Str::random(64),
             ]);
 
