@@ -46,34 +46,32 @@
     <!-- Content -->
 
     <div class="container-xxl d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-        <div class="authentication-wrapper authentication-basic container d-flex justify-content-center align-items-center">
+        <div
+            class="authentication-wrapper authentication-basic container d-flex justify-content-center align-items-center">
             <div class="authentication-inner" style="max-width: 440px; width: 100%;">
                 <!-- Register -->
                 <div class="card shadow-lg border-0 rounded-4" style="overflow: hidden;">
                     <div class="card-body p-4">
 
                         @if (session()->has('success'))
-                        <div class="alert alert-success p-3 rounded" id="alert-success">
-                            {{ session('success') }}
-                        </div>
+                            <div class="alert alert-success p-3 rounded" id="alert-success">
+                                {{ session('success') }}
+                            </div>
                         @endif
 
                         @if (session()->has('error'))
-                        <div class="alert alert-danger alert-dismissible fade show p-3" role="alert" id="error-alert">
-                            {{ session('error') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+                            <div class="alert alert-danger alert-dismissible fade show p-3" role="alert" id="error-alert">
+                                {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
                         @endif
 
                         <!-- Logo -->
                         <div class="app-brand justify-content-center mb-3">
                             <a href="#" class="app-brand-link gap-2 text-decoration-none">
                                 <span class="app-brand-logo demo">
-                                    <img
-                                        src="{{ asset('img/favicon/travelo-logo.svg') }}"
-                                        alt="Travelo Logo"
-                                        class="block mx-auto pb-2"
-                                        style="width: 170px; height: auto;">
+                                    <img src="{{ asset('img/favicon/travelo-logo.svg') }}" alt="Travelo Logo"
+                                        class="block mx-auto pb-2" style="width: 170px; height: auto;">
                                 </span>
                             </a>
                         </div>
@@ -87,43 +85,30 @@
 
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
-                                <input
-                                    type="text"
-                                    class="form-control @error('name') is-invalid @enderror"
-                                    id="name"
-                                    name="name"
-                                    placeholder="Masukkan Nama Anda"
-                                    autofocus>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
+                                    name="name" placeholder="Masukkan Nama Anda" autofocus>
                                 @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input
-                                    type="text"
-                                    class="form-control @error('email') is-invalid @enderror"
-                                    id="email"
-                                    name="email"
-                                    placeholder="Masukkan Email Anda">
+                                <input type="text" class="form-control @error('email') is-invalid @enderror" id="email"
+                                    name="email" placeholder="Masukkan Email Anda">
                                 @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <div class="mb-3 form-password-toggle">
                                 <label for="password" class="form-label">Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input
-                                        type="password"
-                                        id="password"
-                                        class="form-control @error('password') is-invalid @enderror"
-                                        name="password"
-                                        placeholder="••••••••••••"
-                                        aria-describedby="password">
+                                    <input type="password" id="password"
+                                        class="form-control @error('password') is-invalid @enderror" name="password"
+                                        placeholder="••••••••••••" aria-describedby="password">
                                     @error('password')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
@@ -132,15 +117,12 @@
                             <div class="mb-3 form-password-toggle">
                                 <label for="password_confirmation" class="form-label">Confirm Password</label>
                                 <div class="input-group input-group-merge">
-                                    <input
-                                        type="password"
-                                        id="password_confirmation"
+                                    <input type="password" id="password_confirmation"
                                         class="form-control @error('password_confirmation') is-invalid @enderror"
-                                        name="password_confirmation"
-                                        placeholder="••••••••••••"
+                                        name="password_confirmation" placeholder="••••••••••••"
                                         aria-describedby="password_confirmation">
                                     @error('password_confirmation')
-                                    <div class="invalid-feedback">{{ $message }}</div>
+                                        <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                                 </div>
