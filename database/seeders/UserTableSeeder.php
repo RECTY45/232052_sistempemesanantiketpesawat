@@ -20,6 +20,7 @@ class UserTableSeeder extends Seeder
                 'password' => bcrypt('admin123'),
                 'status' => 'aktif',
                 'roles' => 'admin',
+                'email_verified_at' => now(),
             ],
         ];
 

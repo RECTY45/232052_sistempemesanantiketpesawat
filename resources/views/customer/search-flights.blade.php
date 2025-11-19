@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <h2 class="mb-4">Search Flights</h2>
+                <h2 class="mb-4">Cari Penerbangan</h2>
             </div>
         </div>
 
@@ -12,17 +12,17 @@
             <div class="col-lg-8">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Flight Search</h5>
+                        <h5 class="mb-0">Pencarian Penerbangan</h5>
                     </div>
                     <div class="card-body">
                         <form action="{{ route('customer.process-search') }}" method="POST">
                             @csrf
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="departure_airport_id" class="form-label">From</label>
+                                    <label for="departure_airport_id" class="form-label">Dari</label>
                                     <select class="form-control @error('departure_airport_id') is-invalid @enderror"
                                         id="departure_airport_id" name="departure_airport_id" required>
-                                        <option value="">Select Departure City</option>
+                                        <option value="">Pilih Kota Keberangkatan</option>
                                         @foreach($airports as $airport)
                                             <option value="{{ $airport->id }}" {{ old('departure_airport_id') == $airport->id ? 'selected' : '' }}>
                                                 {{ $airport->city }} ({{ $airport->code }}) - {{ $airport->name }}
@@ -35,10 +35,10 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="arrival_airport_id" class="form-label">To</label>
+                                    <label for="arrival_airport_id" class="form-label">Ke</label>
                                     <select class="form-control @error('arrival_airport_id') is-invalid @enderror"
                                         id="arrival_airport_id" name="arrival_airport_id" required>
-                                        <option value="">Select Arrival City</option>
+                                        <option value="">Pilih Kota Tujuan</option>
                                         @foreach($airports as $airport)
                                             <option value="{{ $airport->id }}" {{ old('arrival_airport_id') == $airport->id ? 'selected' : '' }}>
                                                 {{ $airport->city }} ({{ $airport->code }}) - {{ $airport->name }}
@@ -53,7 +53,7 @@
 
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="departure_date" class="form-label">Departure Date</label>
+                                    <label for="departure_date" class="form-label">Tanggal Keberangkatan</label>
                                     <input type="date" class="form-control @error('departure_date') is-invalid @enderror"
                                         id="departure_date" name="departure_date" value="{{ old('departure_date') }}"
                                         min="{{ date('Y-m-d') }}" required>
@@ -63,12 +63,12 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="passengers" class="form-label">Passengers</label>
+                                    <label for="passengers" class="form-label">Penumpang</label>
                                     <select class="form-control @error('passengers') is-invalid @enderror" id="passengers"
                                         name="passengers" required>
                                         @for($i = 1; $i <= 9; $i++)
                                             <option value="{{ $i }}" {{ old('passengers') == $i ? 'selected' : '' }}>
-                                                {{ $i }} {{ $i == 1 ? 'Passenger' : 'Passengers' }}
+                                                {{ $i }} {{ $i == 1 ? 'Penumpang' : 'Penumpang' }}
                                             </option>
                                         @endfor
                                     </select>
@@ -81,7 +81,7 @@
                             <div class="row">
                                 <div class="col-12 text-center">
                                     <button type="submit" class="btn btn-primary btn-lg">
-                                        <i class="fas fa-search mr-2"></i> Search Flights
+                                        <i class="fas fa-search mr-2"></i> Cari Penerbangan
                                     </button>
                                 </div>
                             </div>

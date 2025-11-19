@@ -21,6 +21,7 @@ class CustomerUserSeeder extends Seeder
             'password' => Hash::make('password123'),
             'status' => 'aktif',
             'roles' => 'customer',
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -29,6 +30,7 @@ class CustomerUserSeeder extends Seeder
             'password' => Hash::make('password123'),
             'status' => 'aktif',
             'roles' => 'customer',
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -37,6 +39,7 @@ class CustomerUserSeeder extends Seeder
             'password' => Hash::make('password123'),
             'status' => 'aktif',
             'roles' => 'customer',
+            'email_verified_at' => now(),
         ]);
 
         // Create an admin user for comparison
@@ -47,6 +50,7 @@ class CustomerUserSeeder extends Seeder
                 'password' => Hash::make('admin123'),
                 'status' => 'aktif',
                 'roles' => 'admin',
+                'email_verified_at' => now(),
             ]
         );
     }

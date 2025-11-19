@@ -6,13 +6,13 @@
             <div class="col-12">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <div>
-                        <h2 class="mb-2">Booking Confirmation</h2>
-                        <p class="text-muted mb-0">Your flight has been successfully booked!</p>
+                        <h2 class="mb-2">Konfirmasi Pemesanan</h2>
+                        <p class="text-muted mb-0">Penerbangan Anda telah berhasil dipesan!</p>
                     </div>
                     <div class="text-right">
                         <div class="alert alert-success mb-0">
                             <i class="fas fa-check-circle mr-2"></i>
-                            <strong>Booking Confirmed</strong>
+                            <strong>Pemesanan Dikonfirmasi</strong>
                         </div>
                     </div>
                 </div>
@@ -26,12 +26,12 @@
                     <div class="card-header bg-success text-white">
                         <div class="row align-items-center">
                             <div class="col-md-6">
-                                <h5 class="mb-1">Booking Confirmation</h5>
-                                <p class="mb-0">Booking Code: <strong>{{ $booking->booking_code }}</strong></p>
+                                <h5 class="mb-1">Konfirmasi Pemesanan</h5>
+                                <p class="mb-0">Kode Pemesanan: <strong>{{ $booking->booking_code }}</strong></p>
                             </div>
                             <div class="col-md-6 text-md-right">
                                 <h4 class="mb-0">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</h4>
-                                <small>Total Paid</small>
+                                <small>Total Dibayar</small>
                             </div>
                         </div>
                     </div>

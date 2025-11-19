@@ -50,7 +50,7 @@ class CustomerController extends Controller
         $airlines = Airline::all();
         
         return view('customer.search-flights', [
-            'title' => 'Search Flights',
+            'title' => 'Cari Penerbangan',
             'name' => 'Customer',
             'airports' => $airports,
             'airlines' => $airlines
@@ -215,11 +215,11 @@ class CustomerController extends Controller
             
             DB::commit();
             
-            return redirect()->route('customer.payment', $booking->id)->with('success', 'Booking created successfully!');
+            return redirect()->route('customer.payment', $booking->id)->with('success', 'Pemesanan berhasil dibuat!');
             
         } catch (\Exception $e) {
             DB::rollback();
-            return back()->with('error', 'Booking failed: ' . $e->getMessage());
+            return back()->with('error', 'Pemesanan gagal: ' . $e->getMessage());
         }
     }
 
@@ -309,7 +309,7 @@ class CustomerController extends Controller
                           ->paginate(10);
         
         return view('customer.my-bookings', [
-            'title' => 'My Bookings',
+            'title' => 'Pemesanan Saya',
             'name' => 'Customer',
             'bookings' => $bookings
         ]);
@@ -367,11 +367,11 @@ class CustomerController extends Controller
             
             DB::commit();
             
-            return back()->with('success', 'Booking cancelled successfully');
+            return back()->with('success', 'Pemesanan berhasil dibatalkan');
             
         } catch (\Exception $e) {
             DB::rollback();
-            return back()->with('error', 'Failed to cancel booking');
+            return back()->with('error', 'Gagal membatalkan pemesanan');
         }
     }
 

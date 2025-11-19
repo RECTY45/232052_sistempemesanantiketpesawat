@@ -11,7 +11,7 @@
         <div class="navbar-nav align-items-center">
             <div class="nav-item d-flex align-items-center">
                 <i class="bx bx-search fs-4 lh-0"></i>
-                <input type="text" class="form-control border-0 shadow-none" placeholder="Search..."
+                <input type="text" class="form-control border-0 shadow-none" placeholder="Cari..."
                     aria-label="Search..." />
             </div>
         </div>
@@ -53,7 +53,7 @@
                 <a class="dropdown-item" href=""
                     onclick="event.preventDefault(); document.getElementById('LogoutForm').submit();">
                     <i class="bx bx-power-off me-2"></i>
-                    <span class="align-middle">Log Out</span>
+                    <span class="align-middle">Keluar</span>
                 </a>
             </li>
         </ul>

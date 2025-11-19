@@ -7,23 +7,24 @@
                 <!-- Booking Summary -->
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">Booking Summary</h5>
+                        <h5 class="mb-0">Ringkasan Pemesanan</h5>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <h6>Flight Information</h6>
+                                <h6>Informasi Penerbangan</h6>
                                 <p class="mb-1"><strong>{{ $booking->flight->airline->name }}</strong></p>
                                 <p class="mb-1">{{ $booking->flight->flight_number }}</p>
                                 <p class="mb-1">{{ $booking->flight->departure_airport->city }} →
-                                    {{ $booking->flight->arrival_airport->city }}</p>
+                                    {{ $booking->flight->arrival_airport->city }}
+                                </p>
                                 <p class="mb-1">{{ $booking->flight->departure_time->format('M d, Y H:i') }}</p>
-                                <p class="mb-0">{{ ucfirst($booking->flight_class->class_name) }} Class</p>
+                                <p class="mb-0">Kelas {{ ucfirst($booking->flight_class->class_name) }}</p>
                             </div>
                             <div class="col-md-6">
-                                <h6>Booking Details</h6>
-                                <p class="mb-1"><strong>Booking Code:</strong> {{ $booking->booking_code }}</p>
-                                <p class="mb-1"><strong>Passengers:</strong> {{ $booking->passengers_count }}</p>
+                                <h6>Detail Pemesanan</h6>
+                                <p class="mb-1"><strong>Kode Pemesanan:</strong> {{ $booking->booking_code }}</p>
+                                <p class="mb-1"><strong>Penumpang:</strong> {{ $booking->passengers_count }}</p>
                                 <p class="mb-1"><strong>Status:</strong> {{ ucfirst($booking->status) }}</p>
                                 <h5 class="mt-3 text-primary"><strong>Total: Rp
                                         {{ number_format($booking->total_amount, 0, ',', '.') }}</strong></h5>
@@ -35,7 +36,7 @@
                 <!-- Passengers -->
                 <div class="card mb-4">
                     <div class="card-header">
-                        <h6 class="mb-0">Passenger List</h6>
+                        <h6 class="mb-0">Daftar Penumpang</h6>
                     </div>
                     <div class="card-body">
                         @foreach($booking->passengers as $index => $passenger)

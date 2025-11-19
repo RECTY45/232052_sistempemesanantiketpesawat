@@ -132,7 +132,7 @@
                             </div>
 
                             <div class="mb-3 form-password-toggle">
-                                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password_confirmation"
                                         class="form-control @error('password_confirmation') is-invalid @enderror"
@@ -147,7 +147,7 @@
 
                             <div class="mb-3 form-check">
                                 <input class="form-check-input" type="checkbox" id="remember-me">
-                                <label class="form-check-label" for="remember-me"> Remember Me </label>
+                                <label class="form-check-label" for="remember-me"> Ingat Saya </label>
                             </div>
 
                             <div class="mb-3">
