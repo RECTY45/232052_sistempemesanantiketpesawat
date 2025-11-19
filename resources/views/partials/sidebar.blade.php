@@ -41,12 +41,43 @@
 
     <ul class="menu-inner py-1">
         <!-- Dashboard -->
-        <li class="menu-item {{request()->routeIs('dash.index') ? 'active' : ''}}">
-            <a href="{{route('dash.index')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
-            </a>
+        <li
+            class="menu-item {{request()->routeIs('dash.index') || request()->routeIs('customer.dashboard') ? 'active' : ''}}">
+            @if(auth()->user()->roles == 'customer')
+                <a href="{{route('customer.dashboard')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Analytics">Dashboard</div>
+                </a>
+            @else
+                <a href="{{route('dash.index')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Analytics">Dashboard</div>
+                </a>
+            @endif
         </li>
+
+        @if (@auth()->user()->roles == 'customer')
+            <!-- CUSTOMER MENU -->
+            <li class="menu-header small text-uppercase"><span class="menu-header-text">Booking</span></li>
+
+            <!-- SEARCH FLIGHTS -->
+            <li
+                class="menu-item {{request()->routeIs('customer.search-flights') || request()->routeIs('customer.process-search') || request()->routeIs('customer.book-flight') ? 'active' : ''}}">
+                <a href="{{route('customer.search-flights')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-search"></i>
+                    <div data-i18n="Basic">Cari Penerbangan</div>
+                </a>
+            </li>
+
+            <!-- MY BOOKINGS -->
+            <li
+                class="menu-item {{request()->routeIs('customer.my-bookings') || request()->routeIs('customer.booking-details') ? 'active' : ''}}">
+                <a href="{{route('customer.my-bookings')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-list-ul"></i>
+                    <div data-i18n="Basic">Pemesanan Saya</div>
+                </a>
+            </li>
+        @endif
 
         @if (@auth()->user()->roles == 'admin')
 

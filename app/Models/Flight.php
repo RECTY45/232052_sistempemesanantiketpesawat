@@ -65,6 +65,46 @@ class Flight extends Model
         return $this->hasMany(Booking::class);
     }
 
+    public function getFlightClassesAttribute()
+    {
+        $classes = [];
+        
+        // Economy Class
+        if ($this->economy_price > 0 && $this->available_economy_seats > 0) {
+            $classes[] = (object) [
+                'id' => 1,
+                'class_name' => 'Economy',
+                'code' => 'ECO',
+                'price' => $this->economy_price,
+                'available_seats' => $this->available_economy_seats
+            ];
+        }
+        
+        // Business Class
+        if ($this->business_price > 0 && $this->available_business_seats > 0) {
+            $classes[] = (object) [
+                'id' => 2,
+                'class_name' => 'Business',
+                'code' => 'BUS',
+                'price' => $this->business_price,
+                'available_seats' => $this->available_business_seats
+            ];
+        }
+        
+        // First Class
+        if ($this->first_class_price > 0 && $this->available_first_class_seats > 0) {
+            $classes[] = (object) [
+                'id' => 3,
+                'class_name' => 'First',
+                'code' => 'FST',
+                'price' => $this->first_class_price,
+                'available_seats' => $this->available_first_class_seats
+            ];
+        }
+        
+        return collect($classes);
+    }
+
     // Scopes
     public function scopeActive($query)
     {
@@ -97,11 +137,16 @@ class Flight extends Model
     // Methods
     public function getPriceByClass($class)
     {
-        switch ($class) {
+        switch (strtolower($class)) {
+            case 'bus':
             case 'business':
                 return $this->business_price;
+            case 'fst':
             case 'first_class':
+            case 'first':
                 return $this->first_class_price;
+            case 'eco':
+            case 'economy':
             default:
                 return $this->economy_price;
         }
@@ -109,11 +154,16 @@ class Flight extends Model
 
     public function getAvailableSeatsByClass($class)
     {
-        switch ($class) {
+        switch (strtolower($class)) {
+            case 'bus':
             case 'business':
                 return $this->available_business_seats;
+            case 'fst':
             case 'first_class':
+            case 'first':
                 return $this->available_first_class_seats;
+            case 'eco':
+            case 'economy':
             default:
                 return $this->available_economy_seats;
         }
@@ -130,13 +180,18 @@ class Flight extends Model
             throw new \Exception('Not enough seats available');
         }
 
-        switch ($class) {
+        switch (strtolower($class)) {
+            case 'bus':
             case 'business':
                 $this->available_business_seats -= $count;
                 break;
+            case 'fst':
             case 'first_class':
+            case 'first':
                 $this->available_first_class_seats -= $count;
                 break;
+            case 'eco':
+            case 'economy':
             default:
                 $this->available_economy_seats -= $count;
                 break;
@@ -149,19 +204,24 @@ class Flight extends Model
     {
         $aircraft = $this->aircraft;
         
-        switch ($class) {
+        switch (strtolower($class)) {
+            case 'bus':
             case 'business':
                 $this->available_business_seats = min(
                     $this->available_business_seats + $count,
                     $aircraft->business_seats
                 );
                 break;
+            case 'fst':
             case 'first_class':
+            case 'first':
                 $this->available_first_class_seats = min(
                     $this->available_first_class_seats + $count,
                     $aircraft->first_class_seats
                 );
                 break;
+            case 'eco':
+            case 'economy':
             default:
                 $this->available_economy_seats = min(
                     $this->available_economy_seats + $count,

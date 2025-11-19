@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 class DashController extends Controller
 {
     public function dash(){
+        $user = auth()->user();
+        
+        // Redirect based on user role
+        if ($user->roles === 'customer') {
+            return redirect()->route('customer.dashboard');
+        }
+        
+        // Default admin dashboard
         $stats = [
             'users' => User::count(),
             'airlines' => Airline::count(),

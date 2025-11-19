@@ -56,9 +56,19 @@ class User extends Authenticatable
         return $query->where('roles', 'admin');
     }
 
+    public function scopeCustomer($query)
+    {
+        return $query->where('roles', 'customer');
+    }
+
     // Accessors
     public function getIsAdminAttribute()
     {
         return $this->roles === 'admin';
+    }
+
+    public function getIsCustomerAttribute()
+    {
+        return $this->roles === 'customer';
     }
 }

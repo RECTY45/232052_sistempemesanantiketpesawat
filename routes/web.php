@@ -5,6 +5,7 @@ use App\Http\Controllers\DashController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Admin\AirlineController;
 use App\Http\Controllers\Admin\AirportController;
 use App\Http\Controllers\Admin\AircraftController;
@@ -83,6 +84,21 @@ Route::group(['prefix' => 'pengguna', 'middleware' => ['auth']], function () {
     route::get('/{user}/edit', [UserController::class, 'edit'])->name('user.edit');
     route::put('/{user}', [UserController::class, 'update'])->name('user.update');
     route::delete('/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+});
+
+// Customer Routes - only accessible by customer role
+Route::group(['prefix' => 'customer', 'middleware' => ['auth', 'checkCustomer'], 'as' => 'customer.'], function () {
+    Route::get('/dashboard', [CustomerController::class, 'dashboard'])->name('dashboard');
+    Route::get('/search-flights', [CustomerController::class, 'searchFlights'])->name('search-flights');
+    Route::post('/search-flights', [CustomerController::class, 'processSearch'])->name('process-search');
+    Route::get('/book-flight/{flight}', [CustomerController::class, 'bookFlight'])->name('book-flight');
+    Route::post('/book-flight', [CustomerController::class, 'processBooking'])->name('process-booking');
+    Route::get('/payment/{booking}', [CustomerController::class, 'payment'])->name('payment');
+    Route::post('/payment/{booking}', [CustomerController::class, 'processPayment'])->name('process-payment');
+    Route::get('/booking-confirmation/{booking}', [CustomerController::class, 'bookingConfirmation'])->name('booking-confirmation');
+    Route::get('/my-bookings', [CustomerController::class, 'myBookings'])->name('my-bookings');
+    Route::get('/booking-details/{booking}', [CustomerController::class, 'bookingDetails'])->name('booking-details');
+    Route::post('/cancel-booking/{booking}', [CustomerController::class, 'cancelBooking'])->name('cancel-booking');
 });
 
 Route::get('/activate/{token}', [ActivateAccountController::class, 'activate'])->name('activate.account');
