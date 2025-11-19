@@ -54,14 +54,31 @@
                     <div class="card-body p-4">
 
                         @if (session()->has('success'))
-                            <div class="alert alert-success p-3 rounded" id="alert-success">
+                            <div class="alert alert-success alert-dismissible fade show p-3" role="alert"
+                                id="success-alert">
                                 {{ session('success') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif
 
                         @if (session()->has('error'))
                             <div class="alert alert-danger alert-dismissible fade show p-3" role="alert" id="error-alert">
                                 {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        @if (session()->has('warning'))
+                            <div class="alert alert-warning alert-dismissible fade show p-3" role="alert"
+                                id="warning-alert">
+                                {{ session('warning') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        @if (session()->has('info'))
+                            <div class="alert alert-info alert-dismissible fade show p-3" role="alert" id="info-alert">
+                                {{ session('info') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                             </div>
                         @endif

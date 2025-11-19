@@ -51,6 +51,7 @@ class RegisterController extends Controller
         ]);
 
         try {
+            // Create user dengan status nonaktif dan generate activation token
             $user = User::create([
                 'name' => $validatedData['name'],
                 'email' => $validatedData['email'],
@@ -58,23 +59,24 @@ class RegisterController extends Controller
                 'status' => 'nonaktif',
                 'roles' => 'customer',
                 'activation_token' => Str::random(64),
+                'email_verified_at' => null, // Belum diverifikasi
             ]);
 
             // Try to send activation email
             try {
                 Mail::to($user->email)->send(new ActivationMail($user));
-                $message = 'Register berhasil! Cek email kamu untuk aktivasi akun.';
+                $message = 'Pendaftaran berhasil! Kami telah mengirim email aktivasi ke ' . $user->email . '. Silakan cek email Anda dan klik link aktivasi untuk mengaktifkan akun.';
+                return redirect()->route('AuthLogin')->with('success', $message);
             } catch (\Exception $mailException) {
                 // Log email error but don't fail the registration
                 \Log::error('Failed to send activation email to ' . $user->email . ': ' . $mailException->getMessage());
-                $message = 'Register berhasil! Namun email aktivasi gagal dikirim. Hubungi administrator untuk aktivasi manual.';
+                $message = 'Pendaftaran berhasil! Namun email aktivasi gagal dikirim. Hubungi administrator untuk aktivasi manual atau coba daftar ulang.';
+                return redirect()->route('AuthLogin')->with('warning', $message);
             }
-
-            return redirect(route('AuthLogin'))->with('success', $message);
             
         } catch (Exception $e) {
             \Log::error('Registration failed: ' . $e->getMessage());
-            return back()->withInput()->with('error', 'Gagal Register: ' . $e->getMessage());
+            return back()->withInput()->with('error', 'Gagal melakukan pendaftaran: ' . $e->getMessage());
         }
     }
     /**
