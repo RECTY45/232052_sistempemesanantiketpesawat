@@ -40,7 +40,7 @@ Route::prefix('auth')->group(function () {
 });
 
 Route::get('/', function () {
-    return redirect('auth/login');
+    return view('welcome', ['title' => 'Nusantara Airways - Jelajahi Keindahan Indonesia']);
 });
 
 Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
