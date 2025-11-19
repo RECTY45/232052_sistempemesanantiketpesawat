@@ -8,7 +8,7 @@
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
                     <div>
-                        <img src="{{ asset('img/favicon/travelo-logo.svg') }}" alt="Travelo Logo" class="h-12 w-auto">
+                        <img src="{{ asset('img/favicon/travelo-logo.svg') }}" alt="Logo Travelo" class="h-12 w-auto">
                         <p class="text-xs text-gray-600">Jelajahi Keindahan Indonesia</p>
                     </div>
                 </div>
@@ -465,7 +465,7 @@
                 <div class="relative" data-aos="fade-left">
                     <div class="relative z-10">
                         <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-                            alt="About Nusantara Airways" class="rounded-2xl shadow-2xl">
+                            alt="Tentang Nusantara Airways" class="rounded-2xl shadow-2xl">
                     </div>
 
                     <!-- Achievement Cards -->
@@ -532,7 +532,7 @@
                 <!-- Company Info -->
                 <div>
                     <div class="flex items-center space-x-3 mb-6">
-                        <img src="{{ asset('img/favicon/travelo-logo.svg') }}" alt="Travelo Logo" class="h-12 w-auto">
+                        <img src="{{ asset('img/favicon/travelo-logo.svg') }}" alt="Logo Travelo" class="h-12 w-auto">
                         <div>
                             <h3 class="text-xl font-bold font-crimson">Nusantara Airways</h3>
                             <p class="text-sm text-gray-400">Jelajahi Keindahan Indonesia</p>
@@ -585,13 +585,14 @@
                         <li><a href="#" class="text-gray-300 hover:text-primary-purple transition-colors">Pemesanan
                                 Tiket</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-primary-purple transition-colors">Check-in
-                                Online</a></li>
+                                Daring</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-primary-purple transition-colors">Status
                                 Penerbangan</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-primary-purple transition-colors">Baggage Info</a>
+                        <li><a href="#" class="text-gray-300 hover:text-primary-purple transition-colors">Informasi
+                                Bagasi</a>
                         </li>
-                        <li><a href="#" class="text-gray-300 hover:text-primary-purple transition-colors">Customer
-                                Service</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary-purple transition-colors">Layanan
+                                Pelanggan</a></li>
                     </ul>
                 </div>
 
@@ -623,9 +624,9 @@
                     © 2025 Nusantara Airways. Seluruh hak cipta dilindungi undang-undang.
                 </p>
                 <div class="flex space-x-6">
-                    <a href="#" class="text-gray-400 hover:text-primary-purple transition-colors">Privacy Policy</a>
-                    <a href="#" class="text-gray-400 hover:text-primary-purple transition-colors">Terms of Service</a>
-                    <a href="#" class="text-gray-400 hover:text-primary-purple transition-colors">Cookie Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-primary-purple transition-colors">Kebijakan Privasi</a>
+                    <a href="#" class="text-gray-400 hover:text-primary-purple transition-colors">Syarat Layanan</a>
+                    <a href="#" class="text-gray-400 hover:text-primary-purple transition-colors">Kebijakan Cookie</a>
                 </div>
             </div>
         </div>
@@ -633,7 +634,7 @@
 
     @push('scripts')
         <script>
-            // Mobile menu toggle
+            // Toggle menu mobile
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
 
@@ -641,7 +642,7 @@
                 mobileMenu.classList.toggle('hidden');
             });
 
-            // Smooth scrolling for anchor links
+            // Smooth scrolling untuk tautan anchor
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
@@ -651,13 +652,13 @@
                             behavior: 'smooth',
                             block: 'start'
                         });
-                        // Close mobile menu if open
+                        // Tutup menu mobile jika terbuka
                         mobileMenu.classList.add('hidden');
                     }
                 });
             });
 
-            // Navbar background on scroll
+            // Background navbar saat scroll
             window.addEventListener('scroll', function () {
                 const navbar = document.getElementById('navbar');
                 if (window.scrollY > 50) {
@@ -667,7 +668,7 @@
                 }
             });
 
-            // Add parallax effect to hero section
+            // Tambah efek parallax ke hero section
             window.addEventListener('scroll', function () {
                 const scrolled = window.pageYOffset;
                 const hero = document.querySelector('#beranda');

@@ -77,14 +77,14 @@
                         </div>
                         <!-- /Logo -->
 
-                        <h4 class="mb-2 text-center">Register to {{ $name }} ‹</h4>
-                        <p class="mb-4 text-center">Please sign up to create your account and start your adventure</p>
+                        <h4 class="mb-2 text-center">Daftar ke {{ $name }} ‹</h4>
+                        <p class="mb-4 text-center">Silakan daftar untuk membuat akun dan mulai petualangan Anda</p>
 
                         <form id="formAuthentication" class="mb-3" action="{{ route('register.store') }}" method="POST">
                             @csrf
 
                             <div class="mb-3">
-                                <label for="name" class="form-label">Name</label>
+                                <label for="name" class="form-label">Nama</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
                                     name="name" placeholder="Masukkan Nama Anda" autofocus>
                                 @error('name')
@@ -134,14 +134,14 @@
                             </div>
 
                             <div class="mb-3">
-                                <button class="btn btn-primary d-grid w-100" type="submit">Register</button>
+                                <button class="btn btn-primary d-grid w-100" type="submit">Daftar</button>
                             </div>
                         </form>
 
                         <p class="text-center mb-0">
-                            <span>Already have an account?</span>
+                            <span>Sudah punya akun?</span>
                             <a href="{{ route('AuthLogin') }}">
-                                <span>Sign in here</span>
+                                <span>Masuk di sini</span>
                             </a>
                         </p>
 
