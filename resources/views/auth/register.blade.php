@@ -129,6 +129,23 @@
                                 </div>
                             </div>
 
+                            <div class="mb-3 form-password-toggle">
+                                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                <div class="input-group input-group-merge">
+                                    <input
+                                        type="password"
+                                        id="password_confirmation"
+                                        class="form-control @error('password_confirmation') is-invalid @enderror"
+                                        name="password_confirmation"
+                                        placeholder="••••••••••••"
+                                        aria-describedby="password_confirmation">
+                                    @error('password_confirmation')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                                </div>
+                            </div>
+
                             <div class="mb-3 form-check">
                                 <input class="form-check-input" type="checkbox" id="remember-me">
                                 <label class="form-check-label" for="remember-me"> Remember Me </label>
@@ -141,7 +158,7 @@
 
                         <p class="text-center mb-0">
                             <span>Already have an account?</span>
-                            <a href="{{ route('dash.index') }}">
+                            <a href="{{ route('AuthLogin') }}">
                                 <span>Sign in here</span>
                             </a>
                         </p>
