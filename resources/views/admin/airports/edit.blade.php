@@ -107,31 +107,19 @@
 
                             <div class="row">
                                 <!-- Timezone -->
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-12 mb-3">
                                     <label for="timezone" class="form-label">Zona Waktu <span
                                             class="text-danger">*</span></label>
                                     <select class="form-select @error('timezone') is-invalid @enderror" id="timezone"
                                         name="timezone" required>
                                         <option value="">Pilih Zona Waktu</option>
-                                        <option value="WIB" {{ old('timezone', $airport->timezone) == 'WIB' ? 'selected' : '' }}>WIB (UTC+7)</option>
-                                        <option value="WITA" {{ old('timezone', $airport->timezone) == 'WITA' ? 'selected' : '' }}>WITA (UTC+8)</option>
-                                        <option value="WIT" {{ old('timezone', $airport->timezone) == 'WIT' ? 'selected' : '' }}>WIT (UTC+9)</option>
+                                        <option value="Asia/Jakarta" {{ old('timezone', $airport->timezone) == 'Asia/Jakarta' ? 'selected' : '' }}>WIB (UTC+7) - Asia/Jakarta</option>
+                                        <option value="Asia/Makassar" {{ old('timezone', $airport->timezone) == 'Asia/Makassar' ? 'selected' : '' }}>WITA (UTC+8) -
+                                            Asia/Makassar</option>
+                                        <option value="Asia/Jayapura" {{ old('timezone', $airport->timezone) == 'Asia/Jayapura' ? 'selected' : '' }}>WIT (UTC+9) -
+                                            Asia/Jayapura</option>
                                     </select>
                                     @error('timezone')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <!-- Type -->
-                                <div class="col-md-6 mb-3">
-                                    <label for="international" class="form-label">Jenis Bandara <span
-                                            class="text-danger">*</span></label>
-                                    <select class="form-select @error('international') is-invalid @enderror"
-                                        id="international" name="international" required>
-                                        <option value="0" {{ old('international', $airport->international ? '1' : '0') == '0' ? 'selected' : '' }}>Domestik</option>
-                                        <option value="1" {{ old('international', $airport->international ? '1' : '0') == '1' ? 'selected' : '' }}>Internasional</option>
-                                    </select>
-                                    @error('international')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                                 </div>
@@ -139,15 +127,16 @@
 
                             <!-- Status -->
                             <div class="mb-4">
-                                <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
-                                <select class="form-select @error('status') is-invalid @enderror" id="status" name="status"
-                                    required>
-                                    <option value="active" {{ old('status', $airport->status) == 'active' ? 'selected' : '' }}>Aktif</option>
-                                    <option value="inactive" {{ old('status', $airport->status) == 'inactive' ? 'selected' : '' }}>Tidak Aktif</option>
+                                <label for="is_active" class="form-label">Status <span class="text-danger">*</span></label>
+                                <select class="form-select @error('is_active') is-invalid @enderror" id="is_active"
+                                    name="is_active" required>
+                                    <option value="1" {{ old('is_active', $airport->is_active ? '1' : '0') == '1' ? 'selected' : '' }}>Aktif</option>
+                                    <option value="0" {{ old('is_active', $airport->is_active ? '1' : '0') == '0' ? 'selected' : '' }}>Tidak Aktif</option>
                                 </select>
-                                @error('status')
+                                @error('is_active')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
+                                <small class="text-muted">Bandara aktif dapat menerima jadwal penerbangan</small>
                             </div>
 
                             <!-- Submit Buttons -->

@@ -23,8 +23,12 @@
                         class="text-gray-700 hover:text-primary-purple transition-colors font-medium">Layanan</a>
                     <a href="#tentang"
                         class="text-gray-700 hover:text-primary-purple transition-colors font-medium">Tentang</a>
+                    <a href="{{ route('register.index') }}"
+                        class="text-gray-700 hover:text-primary-purple transition-colors font-medium border border-primary-purple px-4 py-2 rounded-full hover:bg-primary-purple hover:text-white">
+                        Daftar
+                    </a>
                     <a href="{{ route('AuthLogin') }}"
-                        class="bg-gradient-to-r from-primary-purple to-secondary-purple text-white px-6 py-2 rounded-full hover:shadow-lg transition-all duration-300 font-medium">
+                        class="bg-black text-white px-6 py-2 rounded-full hover:bg-gray-800 hover:shadow-lg transition-all duration-300 font-medium">
                         Masuk
                     </a>
                 </div>
@@ -44,8 +48,12 @@
                     <a href="#destinasi" class="text-gray-700 hover:text-primary-purple transition-colors">Destinasi</a>
                     <a href="#layanan" class="text-gray-700 hover:text-primary-purple transition-colors">Layanan</a>
                     <a href="#tentang" class="text-gray-700 hover:text-primary-purple transition-colors">Tentang</a>
+                    <a href="{{ route('register.index') }}"
+                        class="text-gray-700 hover:text-primary-purple transition-colors border border-primary-purple px-4 py-2 rounded-full text-center hover:bg-primary-purple hover:text-white">
+                        Daftar
+                    </a>
                     <a href="{{ route('AuthLogin') }}"
-                        class="bg-gradient-to-r from-primary-purple to-secondary-purple text-white px-6 py-2 rounded-full text-center">
+                        class="bg-black text-white px-6 py-2 rounded-full text-center hover:bg-gray-800 transition-all duration-300">
                         Masuk
                     </a>
                 </div>
