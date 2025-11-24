@@ -126,39 +126,26 @@
                         <hr class="my-4">
                         <h6 class="fw-bold mb-3 text-primary">Jadwal Penerbangan</h6>
                         <div class="row">
-                            <div class="col-md-4 mb-3">
-                                <label for="departure_date" class="form-label">Tanggal Keberangkatan <span class="text-danger">*</span></label>
-                                <input type="date" 
-                                       class="form-control @error('departure_date') is-invalid @enderror" 
-                                       id="departure_date" 
-                                       name="departure_date" 
-                                       value="{{ old('departure_date', $flight->departure_date) }}" 
-                                       required>
-                                @error('departure_date')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="departure_time" class="form-label">Waktu Keberangkatan <span class="text-danger">*</span></label>
-                                <input type="time" 
+                                <input type="datetime-local" 
                                        class="form-control @error('departure_time') is-invalid @enderror" 
                                        id="departure_time" 
                                        name="departure_time" 
-                                       value="{{ old('departure_time', \Carbon\Carbon::parse($flight->departure_time)->format('H:i')) }}" 
+                                       value="{{ old('departure_time', $flight->departure_time->format('Y-m-d\TH:i')) }}" 
                                        required>
                                 @error('departure_time')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-6 mb-3">
                                 <label for="arrival_time" class="form-label">Waktu Tiba <span class="text-danger">*</span></label>
-                                <input type="time" 
+                                <input type="datetime-local" 
                                        class="form-control @error('arrival_time') is-invalid @enderror" 
                                        id="arrival_time" 
                                        name="arrival_time" 
-                                       value="{{ old('arrival_time', \Carbon\Carbon::parse($flight->arrival_time)->format('H:i')) }}" 
+                                       value="{{ old('arrival_time', $flight->arrival_time->format('Y-m-d\TH:i')) }}" 
                                        required>
                                 @error('arrival_time')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -166,38 +153,17 @@
                             </div>
                         </div>
 
-                        <!-- Pricing -->
-                        <hr class="my-4">
-                        <h6 class="fw-bold mb-3 text-primary">Harga Tiket</h6>
                         <div class="row">
                             <div class="col-md-4 mb-3">
-                                <label for="base_price" class="form-label">Harga Dasar <span class="text-danger">*</span></label>
-                                <div class="input-group">
-                                    <span class="input-group-text">Rp</span>
-                                    <input type="number" 
-                                           class="form-control @error('base_price') is-invalid @enderror" 
-                                           id="base_price" 
-                                           name="base_price" 
-                                           value="{{ old('base_price', $flight->base_price) }}" 
-                                           min="0"
-                                           placeholder="0"
-                                           required>
-                                </div>
-                                @error('base_price')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-4 mb-3">
-                                <label for="available_seats" class="form-label">Kursi Tersedia <span class="text-danger">*</span></label>
-                                <input type="number" 
-                                       class="form-control @error('available_seats') is-invalid @enderror" 
-                                       id="available_seats" 
-                                       name="available_seats" 
-                                       value="{{ old('available_seats', $flight->available_seats) }}" 
-                                       min="1"
-                                       required>
-                                @error('available_seats')
+                                <label for="gate" class="form-label">Gate</label>
+                                <input type="text" 
+                                       class="form-control @error('gate') is-invalid @enderror" 
+                                       id="gate" 
+                                       name="gate" 
+                                       value="{{ old('gate', $flight->gate) }}" 
+                                       placeholder="Contoh: A1, B5"
+                                       maxlength="10">
+                                @error('gate')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
@@ -209,17 +175,87 @@
                                         name="status" 
                                         required>
                                     <option value="scheduled" {{ old('status', $flight->status) == 'scheduled' ? 'selected' : '' }}>Terjadwal</option>
-                                    <option value="boarding" {{ old('status', $flight->status) == 'boarding' ? 'selected' : '' }}>Boarding</option>
-                                    <option value="departed" {{ old('status', $flight->status) == 'departed' ? 'selected' : '' }}>Berangkat</option>
-                                    <option value="arrived" {{ old('status', $flight->status) == 'arrived' ? 'selected' : '' }}>Tiba</option>
+                                    <option value="delayed" {{ old('status', $flight->status) == 'delayed' ? 'selected' : '' }}>Tertunda</option>
                                     <option value="cancelled" {{ old('status', $flight->status) == 'cancelled' ? 'selected' : '' }}>Dibatalkan</option>
+                                    <option value="completed" {{ old('status', $flight->status) == 'completed' ? 'selected' : '' }}>Selesai</option>
                                 </select>
                                 @error('status')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="is_active" class="form-label">Status Aktif</label>
+                                <select class="form-select @error('is_active') is-invalid @enderror" 
+                                        id="is_active" 
+                                        name="is_active">
+                                    <option value="1" {{ old('is_active', $flight->is_active ? '1' : '0') == '1' ? 'selected' : '' }}>Aktif</option>
+                                    <option value="0" {{ old('is_active', $flight->is_active ? '1' : '0') == '0' ? 'selected' : '' }}>Tidak Aktif</option>
+                                </select>
+                                @error('is_active')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
+                        <!-- Pricing -->
+                        <hr class="my-4">
+                        <h6 class="fw-bold mb-3 text-primary">Harga Tiket</h6>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="economy_price" class="form-label">Harga Economy <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" 
+                                           class="form-control @error('economy_price') is-invalid @enderror" 
+                                           id="economy_price" 
+                                           name="economy_price" 
+                                           value="{{ old('economy_price', $flight->economy_price) }}" 
+                                           min="0"
+                                           step="0.01"
+                                           placeholder="0"
+                                           required>
+                                </div>
+                                @error('economy_price')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="business_price" class="form-label">Harga Business</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" 
+                                           class="form-control @error('business_price') is-invalid @enderror" 
+                                           id="business_price" 
+                                           name="business_price" 
+                                           value="{{ old('business_price', $flight->business_price) }}" 
+                                           min="0"
+                                           step="0.01"
+                                           placeholder="0">
+                                </div>
+                                @error('business_price')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="first_class_price" class="form-label">Harga First Class</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" 
+                                           class="form-control @error('first_class_price') is-invalid @enderror" 
+                                           id="first_class_price" 
+                                           name="first_class_price" 
+                                           value="{{ old('first_class_price', $flight->first_class_price) }}" 
+                                           min="0"
+                                           step="0.01"
+                                           placeholder="0">
+                                </div>
+                                @error('first_class_price')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         <!-- Submit Buttons -->
                         <div class="d-flex justify-content-end gap-2 mt-4">
                             <a href="{{ route('admin.flights.index') }}" class="btn btn-outline-secondary">
@@ -241,8 +277,16 @@
 document.getElementById('aircraft_id').addEventListener('change', function() {
     const selectedOption = this.options[this.selectedIndex];
     const capacity = selectedOption.getAttribute('data-capacity');
+    
+    // Note: This script needs to be updated to work with the new pricing structure
     if (capacity) {
-        document.getElementById('available_seats').value = capacity;
+        // Set economy seats as 70% of capacity
+        const economySeats = Math.floor(capacity * 0.7);
+        const businessSeats = Math.floor(capacity * 0.25);
+        const firstClassSeats = Math.floor(capacity * 0.05);
+        
+        // Update price fields to suggest based on aircraft type
+        console.log('Selected aircraft capacity:', capacity);
     }
 });
 </script>
