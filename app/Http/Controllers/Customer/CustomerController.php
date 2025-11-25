@@ -135,7 +135,7 @@ class CustomerController extends Controller
     {
         $request->validate([
             'flight_id' => 'required|exists:flights,id',
-            'flight_class_id' => 'required|exists:flight_classes,id',
+            'flight_class_id' => 'required|in:1,2,3',
             'passengers' => 'required|array|min:1',
             'passengers.*.name' => 'required|string|max:255',
             'passengers.*.phone' => 'required|string|max:15',
@@ -185,7 +185,7 @@ class CustomerController extends Controller
                 'flight_id' => $request->flight_id,
                 'flight_class_id' => $flightClassId,
                 'passengers_count' => $passengerCount,
-                'total_amount' => $classPrice * $passengerCount,
+                'total_price' => $classPrice * $passengerCount,
                 'status' => 'pending',
                 'booking_code' => $this->generateBookingCode(),
             ]);
@@ -232,7 +232,7 @@ class CustomerController extends Controller
             abort(403);
         }
         
-        $booking->load(['flight', 'flight_class', 'passengers']);
+        $booking->load(['flight', 'passengers']);
         
         return view('customer.payment', [
             'title' => 'Payment',
@@ -260,11 +260,12 @@ class CustomerController extends Controller
             // Create payment record
             $payment = Payment::create([
                 'booking_id' => $booking->id,
-                'amount' => $booking->total_amount,
-                'payment_method' => $request->payment_method,
-                'status' => 'completed',
+                'payment_code' => Payment::generatePaymentCode(),
+                'amount' => $booking->total_price,
+                'method' => $request->payment_method,
+                'status' => 'success',
                 'payment_date' => now(),
-                'transaction_id' => $this->generateTransactionId(),
+                'expires_at' => now()->addHours(24),
             ]);
 
             // Update booking status
@@ -289,7 +290,7 @@ class CustomerController extends Controller
             abort(403);
         }
         
-        $booking->load(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport', 'flight_class', 'passengers', 'payment']);
+        $booking->load(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport', 'passengers', 'payment']);
         
         return view('customer.booking-confirmation', [
             'title' => 'Booking Confirmation',
@@ -303,7 +304,7 @@ class CustomerController extends Controller
      */
     public function myBookings()
     {
-        $bookings = Booking::with(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport', 'flight_class'])
+        $bookings = Booking::with(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport'])
                           ->where('user_id', Auth::id())
                           ->latest()
                           ->paginate(10);
@@ -324,7 +325,7 @@ class CustomerController extends Controller
             abort(403);
         }
         
-        $booking->load(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport', 'flight_class', 'passengers', 'payment']);
+        $booking->load(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport', 'passengers', 'payment']);
         
         return view('customer.booking-details', [
             'title' => 'Booking Details',

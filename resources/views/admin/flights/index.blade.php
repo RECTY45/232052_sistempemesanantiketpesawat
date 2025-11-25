@@ -55,8 +55,8 @@
                     </div>
                     <div class="col-md-2">
                         <label class="form-label">Tanggal</label>
-                        <input type="date" name="departure_date" class="form-control" 
-                               value="{{ request('departure_date') }}">
+                        <input type="date" name="date" class="form-control" 
+                               value="{{ request('date') }}">
                     </div>
                     <div class="col-md-3">
                         <div class="d-flex gap-2">
@@ -123,24 +123,27 @@
                             </td>
                             <td>
                                 <div>
-                                    <span class="fw-semibold">{{ \Carbon\Carbon::parse($flight->departure_date)->format('d M Y') }}</span>
+                                    <span class="fw-semibold">{{ $flight->departure_time->format('d M Y') }}</span>
                                 </div>
                                 <small class="text-muted">
-                                    {{ \Carbon\Carbon::parse($flight->departure_time)->format('H:i') }} - 
-                                    {{ \Carbon\Carbon::parse($flight->arrival_time)->format('H:i') }}
+                                    {{ $flight->departure_time->format('H:i') }} - 
+                                    {{ $flight->arrival_time->format('H:i') }}
                                 </small>
                             </td>
                             <td>
                                 <div>
-                                    <span class="fw-semibold">{{ $flight->aircraft->aircraft_code }}</span>
+                                    <span class="fw-semibold">{{ $flight->aircraft->registration }}</span>
                                 </div>
                                 <small class="text-muted">{{ $flight->aircraft->model }}</small>
                             </td>
                             <td>
                                 <div class="text-primary fw-semibold">
-                                    Rp {{ number_format($flight->base_price, 0, ',', '.') }}
+                                    Rp {{ number_format($flight->economy_price, 0, ',', '.') }}
                                 </div>
-                                <small class="text-muted">{{ $flight->available_seats }} kursi</small>
+                                @php
+                                    $totalSeats = $flight->available_economy_seats + $flight->available_business_seats + $flight->available_first_class_seats;
+                                @endphp
+                                <small class="text-muted">{{ $totalSeats }} kursi</small>
                             </td>
                             <td>
                                 @if($flight->status === 'scheduled')

@@ -44,7 +44,7 @@
                                     <p class="mb-1"><strong>{{ $booking->flight->airline->name }}</strong></p>
                                     <p class="mb-1">Flight {{ $booking->flight->flight_number }}</p>
                                     <p class="mb-1">{{ $booking->flight->aircraft->model }}</p>
-                                    <p class="mb-0">{{ ucfirst($booking->flight_class->class_name) }} Class</p>
+                                    <p class="mb-0">{{ $booking->flight_class_name }}</p>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -129,12 +129,12 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="d-flex justify-content-between mb-2">
-                                        <span>Transaction ID:</span>
-                                        <span><strong>{{ $booking->payment->transaction_id }}</strong></span>
+                                        <span>Payment Code:</span>
+                                        <span><strong>{{ $booking->payment->payment_code }}</strong></span>
                                     </div>
                                     <div class="d-flex justify-content-between mb-2">
                                         <span>Payment Method:</span>
-                                        <span>{{ ucfirst(str_replace('_', ' ', $booking->payment->payment_method)) }}</span>
+                                        <span>{{ ucfirst(str_replace('_', ' ', $booking->payment->method)) }}</span>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

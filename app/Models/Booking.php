@@ -41,10 +41,11 @@ class Booking extends Model
         return $this->belongsTo(Flight::class);
     }
 
-    public function flightClass()
-    {
-        return $this->belongsTo(FlightClass::class);
-    }
+    // Note: flight_class_id is just an integer (1,2,3), not a real relation
+    // public function flightClass()
+    // {
+    //     return $this->belongsTo(FlightClass::class);
+    // }
 
     public function passengers()
     {
@@ -54,6 +55,11 @@ class Booking extends Model
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class)->latest();
     }
 
     public function latestPayment()
@@ -89,6 +95,38 @@ class Booking extends Model
         ];
 
         return $badges[$this->status] ?? 'secondary';
+    }
+
+    public function getFlightClassNameAttribute()
+    {
+        switch ($this->flight_class_id) {
+            case 1:
+                return 'Economy';
+            case 2:
+                return 'Business';
+            case 3:
+                return 'First Class';
+            default:
+                return 'Unknown';
+        }
+    }
+
+    public function getFlightClassPriceAttribute()
+    {
+        if (!$this->flight) {
+            return 0;
+        }
+
+        switch ($this->flight_class_id) {
+            case 1:
+                return $this->flight->economy_price;
+            case 2:
+                return $this->flight->business_price;
+            case 3:
+                return $this->flight->first_class_price;
+            default:
+                return 0;
+        }
     }
 
     // Static Methods
