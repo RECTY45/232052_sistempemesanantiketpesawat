@@ -64,7 +64,8 @@
                                         <div class="row text-center">
                                             <div class="col-5">
                                                 <h5 class="mb-0">{{ $flight->departure_time->format('H:i') }}</h5>
-                                                <small class="text-muted">{{ $flight->departure_airport->code }}</small>
+                                                <small
+                                                    class="text-muted">{{ $flight->departure_airport ? $flight->departure_airport->code : '-' }}</small>
                                             </div>
                                             <div class="col-2">
                                                 <i class="fas fa-plane text-muted"></i>
@@ -80,7 +81,8 @@
                                             </div>
                                             <div class="col-5">
                                                 <h5 class="mb-0">{{ $flight->arrival_time->format('H:i') }}</h5>
-                                                <small class="text-muted">{{ $flight->arrival_airport->code }}</small>
+                                                <small
+                                                    class="text-muted">{{ $flight->arrival_airport ? $flight->arrival_airport->code : '-' }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -126,15 +128,21 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <h6>Departure</h6>
-                                                    <p class="mb-1">{{ $flight->departure_airport->name }}</p>
-                                                    <p class="mb-1">{{ $flight->departure_airport->city }}</p>
+                                                    <p class="mb-1">
+                                                        {{ $flight->departure_airport ? $flight->departure_airport->name : '-' }}
+                                                    </p>
+                                                    <p class="mb-1">
+                                                        {{ $flight->departure_airport ? $flight->departure_airport->city : '-' }}
+                                                    </p>
                                                     <p class="mb-0 text-muted">{{ $flight->departure_time->format('M d, Y H:i') }}
                                                     </p>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <h6>Arrival</h6>
-                                                    <p class="mb-1">{{ $flight->arrival_airport->name }}</p>
-                                                    <p class="mb-1">{{ $flight->arrival_airport->city }}</p>
+                                                    <p class="mb-1">
+                                                        {{ $flight->arrival_airport ? $flight->arrival_airport->name : '-' }}</p>
+                                                    <p class="mb-1">
+                                                        {{ $flight->arrival_airport ? $flight->arrival_airport->city : '-' }}</p>
                                                     <p class="mb-0 text-muted">{{ $flight->arrival_time->format('M d, Y H:i') }}</p>
                                                 </div>
                                             </div>
