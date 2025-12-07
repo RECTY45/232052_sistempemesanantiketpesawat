@@ -48,7 +48,7 @@
                             <div class="card-body text-center">
                                 <h6 class="text-muted mb-1">Total Pembayaran</h6>
                                 <h4 class="fw-bold text-success mb-0">
-                                    Rp {{ number_format($booking->total_amount, 0, ',', '.') }}
+                                    Rp {{ number_format($booking->total_price, 0, ',', '.') }}
                                 </h4>
                             </div>
                         </div>

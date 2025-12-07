@@ -11,8 +11,8 @@
                             <div class="col-md-8">
                                 <h5 class="mb-1">{{ $flight->airline->name }} {{ $flight->flight_number }}</h5>
                                 <p class="mb-0">
-                                    <strong>{{ $flight->departure_airport->city }}</strong> →
-                                    <strong>{{ $flight->arrival_airport->city }}</strong> |
+                                    <strong>{{ $flight->departureAirport->city }}</strong> →
+                                    <strong>{{ $flight->arrivalAirport->city }}</strong> |
                                     {{ $flight->departure_time->format('M d, Y H:i') }} |
                                     {{ $passengers }} {{ $passengers == 1 ? 'Passenger' : 'Passengers' }}
                                     @if($flight_class)

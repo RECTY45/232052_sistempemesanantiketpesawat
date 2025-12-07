@@ -161,7 +161,7 @@
                                     </td>
                                     <td>
                                         <div class="fw-bold text-success">
-                                            Rp {{ number_format($booking->total_amount, 0, ',', '.') }}
+                                            Rp {{ number_format($booking->total_price, 0, ',', '.') }}
                                         </div>
                                     </td>
                                     <td>

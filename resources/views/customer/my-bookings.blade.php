@@ -48,16 +48,16 @@
                                             <div class="col-5">
                                                 <h6 class="mb-0">{{ $booking->flight->departure_time->format('H:i') }}</h6>
                                                 <small
-                                                    class="text-muted">{{ $booking->flight->departure_airport->city }}</small><br>
-                                                <small class="text-muted">{{ $booking->flight->departure_airport->code }}</small>
+                                                    class="text-muted">{{ $booking->flight->departureAirport->city }}</small><br>
+                                                <small class="text-muted">{{ $booking->flight->departureAirport->code }}</small>
                                             </div>
                                             <div class="col-2 d-flex align-items-center justify-content-center">
                                                 <i class="fas fa-arrow-right text-muted"></i>
                                             </div>
                                             <div class="col-5">
                                                 <h6 class="mb-0">{{ $booking->flight->arrival_time->format('H:i') }}</h6>
-                                                <small class="text-muted">{{ $booking->flight->arrival_airport->city }}</small><br>
-                                                <small class="text-muted">{{ $booking->flight->arrival_airport->code }}</small>
+                                                <small class="text-muted">{{ $booking->flight->arrivalAirport->city }}</small><br>
+                                                <small class="text-muted">{{ $booking->flight->arrivalAirport->code }}</small>
                                             </div>
                                         </div>
                                     </div>
@@ -75,7 +75,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <small class="text-muted">Class</small><br>
-                                            <strong>{{ ucfirst($booking->flight_class->class_name) }}</strong>
+                                            <strong>{{ $booking->flight_class_name }}</strong>
                                         </div>
                                         <div class="col-6">
                                             <small class="text-muted">Passengers</small><br>
@@ -85,7 +85,7 @@
 
                                     <div class="mt-2">
                                         <small class="text-muted">Total Amount</small><br>
-                                        <h6 class="text-primary">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</h6>
+                                        <h6 class="text-primary">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</h6>
                                     </div>
                                 </div>
                             </div>

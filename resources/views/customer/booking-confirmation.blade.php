@@ -30,7 +30,7 @@
                                 <p class="mb-0">Kode Pemesanan: <strong>{{ $booking->booking_code }}</strong></p>
                             </div>
                             <div class="col-md-6 text-md-right">
-                                <h4 class="mb-0">Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</h4>
+                                <h4 class="mb-0">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</h4>
                                 <small>Total Dibayar</small>
                             </div>
                         </div>
@@ -73,9 +73,9 @@
                         <div class="row text-center">
                             <div class="col-5">
                                 <div class="departure-info">
-                                    <h5 class="mb-1">{{ $booking->flight->departure_airport->code }}</h5>
-                                    <p class="mb-1">{{ $booking->flight->departure_airport->name }}</p>
-                                    <p class="mb-0 text-muted">{{ $booking->flight->departure_airport->city }}</p>
+                                    <h5 class="mb-1">{{ $booking->flight->departureAirport->code }}</h5>
+                                    <p class="mb-1">{{ $booking->flight->departureAirport->name }}</p>
+                                    <p class="mb-0 text-muted">{{ $booking->flight->departureAirport->city }}</p>
                                 </div>
                             </div>
                             <div class="col-2 d-flex align-items-center justify-content-center">
@@ -83,9 +83,9 @@
                             </div>
                             <div class="col-5">
                                 <div class="arrival-info">
-                                    <h5 class="mb-1">{{ $booking->flight->arrival_airport->code }}</h5>
-                                    <p class="mb-1">{{ $booking->flight->arrival_airport->name }}</p>
-                                    <p class="mb-0 text-muted">{{ $booking->flight->arrival_airport->city }}</p>
+                                    <h5 class="mb-1">{{ $booking->flight->arrivalAirport->code }}</h5>
+                                    <p class="mb-1">{{ $booking->flight->arrivalAirport->name }}</p>
+                                    <p class="mb-0 text-muted">{{ $booking->flight->arrivalAirport->city }}</p>
                                 </div>
                             </div>
                         </div>

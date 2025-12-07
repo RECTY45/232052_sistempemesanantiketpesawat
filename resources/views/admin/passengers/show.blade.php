@@ -109,7 +109,7 @@
                                 <div class="mb-3">
                                     <label class="small text-muted">Total Pembayaran</label>
                                     <p class="fw-bold text-success mb-1">
-                                        Rp {{ number_format($passenger->booking->total_amount, 0, ',', '.') }}
+                                        Rp {{ number_format($passenger->booking->total_price, 0, ',', '.') }}
                                     </p>
                                 </div>
                                 <div class="mb-3">

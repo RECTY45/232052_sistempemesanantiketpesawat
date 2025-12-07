@@ -191,9 +191,9 @@
                                                     </td>
                                                     <td>
                                                         <div>
-                                                            <span class="fw-semibold">{{ $booking->flight->departure_airport }}</span>
+                                                            <span class="fw-semibold">{{ $booking->flight->departureAirport->code }}</span>
                                                             <i class="bx bx-right-arrow-alt mx-1"></i>
-                                                            <span class="fw-semibold">{{ $booking->flight->arrival_airport }}</span>
+                                                            <span class="fw-semibold">{{ $booking->flight->arrivalAirport->code }}</span>
                                                         </div>
                                                         <small class="text-muted">{{ $booking->flight->airline->name }}</small>
                                                     </td>
@@ -205,7 +205,7 @@
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <span class="fw-semibold">Rp {{ number_format($booking->total_amount) }}</span>
+                                                        <span class="fw-semibold">Rp {{ number_format($booking->total_price) }}</span>
                                                     </td>
                                                     <td>
                                                         @if($booking->status === 'confirmed')

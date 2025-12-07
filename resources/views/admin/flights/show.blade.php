@@ -187,7 +187,7 @@
                                                         <span class="badge bg-secondary">{{ ucfirst($booking->status) }}</span>
                                                     @endif
                                                 </td>
-                                                <td>Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</td>
+                                                <td>Rp {{ number_format($booking->total_price, 0, ',', '.') }}</td>
                                                 <td>{{ $booking->created_at->format('d/m/Y H:i') }}</td>
                                             </tr>
                                         @endforeach
@@ -247,7 +247,7 @@
                                 <span class="text-muted">Total Pendapatan:</span>
                                 <strong class="text-success">
                                     Rp
-                                    {{ number_format($flight->bookings->where('status', 'confirmed')->sum('total_amount'), 0, ',', '.') }}
+                                    {{ number_format($flight->bookings->where('status', 'confirmed')->sum('total_price'), 0, ',', '.') }}
                                 </strong>
                             </div>
                         </div>

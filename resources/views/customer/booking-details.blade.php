@@ -55,7 +55,7 @@
                                 <p class="mb-1"><strong>{{ $booking->flight->airline->name }}</strong></p>
                                 <p class="mb-1">Flight {{ $booking->flight->flight_number }}</p>
                                 <p class="mb-1">{{ $booking->flight->aircraft->model }}</p>
-                                <p class="mb-0">{{ ucfirst($booking->flight_class->class_name) }} Class</p>
+                                <p class="mb-0">{{ $booking->flight_class_name }} Class</p>
                             </div>
                             <div class="col-md-6">
                                 <h6>Schedule</h6>
@@ -74,9 +74,9 @@
                         <div class="row text-center">
                             <div class="col-5">
                                 <div class="airport-info">
-                                    <h5 class="mb-1">{{ $booking->flight->departure_airport->code }}</h5>
-                                    <p class="mb-1">{{ $booking->flight->departure_airport->name }}</p>
-                                    <p class="mb-0 text-muted">{{ $booking->flight->departure_airport->city }}</p>
+                                    <h5 class="mb-1">{{ $booking->flight->departureAirport->code }}</h5>
+                                    <p class="mb-1">{{ $booking->flight->departureAirport->name }}</p>
+                                    <p class="mb-0 text-muted">{{ $booking->flight->departureAirport->city }}</p>
                                 </div>
                             </div>
                             <div class="col-2 d-flex align-items-center justify-content-center">
@@ -86,9 +86,9 @@
                             </div>
                             <div class="col-5">
                                 <div class="airport-info">
-                                    <h5 class="mb-1">{{ $booking->flight->arrival_airport->code }}</h5>
-                                    <p class="mb-1">{{ $booking->flight->arrival_airport->name }}</p>
-                                    <p class="mb-0 text-muted">{{ $booking->flight->arrival_airport->city }}</p>
+                                    <h5 class="mb-1">{{ $booking->flight->arrivalAirport->code }}</h5>
+                                    <p class="mb-1">{{ $booking->flight->arrivalAirport->name }}</p>
+                                    <p class="mb-0 text-muted">{{ $booking->flight->arrivalAirport->city }}</p>
                                 </div>
                             </div>
                         </div>
@@ -132,9 +132,9 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <h6>Transaction Details</h6>
-                                    <p class="mb-1"><strong>Transaction ID:</strong> {{ $booking->payment->transaction_id }}</p>
+                                    <p class="mb-1"><strong>Payment Code:</strong> {{ $booking->payment->payment_code }}</p>
                                     <p class="mb-1"><strong>Payment Method:</strong>
-                                        {{ ucfirst(str_replace('_', ' ', $booking->payment->payment_method)) }}</p>
+                                        {{ ucfirst(str_replace('_', ' ', $booking->payment->method)) }}</p>
                                     <p class="mb-0"><strong>Payment Date:</strong>
                                         {{ $booking->payment->payment_date->format('M d, Y H:i') }}</p>
                                 </div>
@@ -172,7 +172,7 @@
                         <div class="quick-info mb-3">
                             <div class="d-flex justify-content-between mb-2">
                                 <span class="text-muted">Total Amount:</span>
-                                <strong>Rp {{ number_format($booking->total_amount, 0, ',', '.') }}</strong>
+                                <strong>Rp {{ number_format($booking->total_price, 0, ',', '.') }}</strong>
                             </div>
                             <div class="d-flex justify-content-between mb-2">
                                 <span class="text-muted">Status:</span>

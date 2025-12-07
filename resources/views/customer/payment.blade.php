@@ -15,8 +15,8 @@
                                 <h6>Informasi Penerbangan</h6>
                                 <p class="mb-1"><strong>{{ $booking->flight->airline->name }}</strong></p>
                                 <p class="mb-1">{{ $booking->flight->flight_number }}</p>
-                                <p class="mb-1">{{ $booking->flight->departure_airport->city }} →
-                                    {{ $booking->flight->arrival_airport->city }}
+                                <p class="mb-1">{{ $booking->flight->departureAirport->city }} →
+                                    {{ $booking->flight->arrivalAirport->city }}
                                 </p>
                                 <p class="mb-1">{{ $booking->flight->departure_time->format('M d, Y H:i') }}</p>
                                 <p class="mb-0">Kelas {{ $booking->flight_class_name }}</p>

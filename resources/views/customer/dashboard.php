@@ -134,7 +134,7 @@
                                         <tr>
                                             <td><strong>{{ $booking->booking_code }}</strong></td>
                                             <td>{{ $booking->flight->airline->name }} {{ $booking->flight->flight_number }}</td>
-                                            <td>{{ $booking->flight->departure_airport->city }} → {{ $booking->flight->arrival_airport->city }}</td>
+                                            <td>{{ $booking->flight->departureAirport->city }} → {{ $booking->flight->arrivalAirport->city }}</td>
                                             <td>{{ $booking->flight->departure_time->format('M d, Y H:i') }}</td>
                                             <td>
                                                 @if($booking->status === 'confirmed')
