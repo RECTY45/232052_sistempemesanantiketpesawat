@@ -9,9 +9,11 @@
                 <p class="text-muted">Kelola semua pemesanan tiket penerbangan</p>
             </div>
             <div class="d-flex gap-2">
-                <button class="btn btn-outline-primary" onclick="window.print()">
+                <a class="btn btn-outline-primary"
+                    href="{{ route('admin.bookings.print') }}{{ request()->getQueryString() ? '?' . request()->getQueryString() : '' }}"
+                    target="_blank" rel="noopener">
                     <i class="bx bx-printer me-2"></i>Cetak Laporan
-                </button>
+                </a>
             </div>
         </div>
 

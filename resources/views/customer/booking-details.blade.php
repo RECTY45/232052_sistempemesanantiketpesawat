@@ -195,9 +195,9 @@
                             @endif
 
                             @if($booking->status === 'confirmed')
-                                <button class="btn btn-info btn-block mb-2" onclick="printTicket()">
-                                    <i class="fas fa-print mr-2"></i> Print Ticket
-                                </button>
+                                <a href="{{ route('customer.booking-pdf', $booking->id) }}" class="btn btn-info btn-block mb-2" target="_blank" rel="noopener">
+                                    <i class="fas fa-file-pdf mr-2"></i> Unduh Tiket (PDF)
+                                </a>
                             @endif
 
                             @if($booking->status === 'pending' || $booking->status === 'confirmed')
@@ -321,10 +321,6 @@
             document.getElementById('cancelBookingCode').textContent = bookingCode;
             document.getElementById('cancelBookingForm').action = `/customer/cancel-booking/${bookingId}`;
             $('#cancelBookingModal').modal('show');
-        }
-
-        function printTicket() {
-            window.print();
         }
     </script>
 @endsection

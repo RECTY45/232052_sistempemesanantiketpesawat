@@ -13,6 +13,7 @@ use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class CustomerController extends Controller
 {
@@ -332,6 +333,26 @@ class CustomerController extends Controller
             'name' => 'Customer',
             'booking' => $booking
         ]);
+    }
+
+    /**
+     * Download booking ticket as PDF
+     */
+    public function downloadTicket(Booking $booking)
+    {
+        if ($booking->user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        $booking->load(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport', 'passengers', 'payment']);
+
+        $pdf = Pdf::loadView('customer.booking-pdf', [
+            'booking' => $booking
+        ])->setPaper('a4');
+
+        $fileName = 'tiket-' . $booking->booking_code . '.pdf';
+
+        return $pdf->download($fileName);
     }
 
     /**

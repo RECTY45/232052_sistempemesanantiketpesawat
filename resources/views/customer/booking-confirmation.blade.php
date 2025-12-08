@@ -164,9 +164,9 @@
                                 </a>
                             </div>
                             <div class="col-md-4 mb-3">
-                                <button class="btn btn-info btn-block" onclick="printTicket()">
-                                    <i class="fas fa-print mr-2"></i> Print Ticket
-                                </button>
+                                <a href="{{ route('customer.booking-pdf', $booking->id) }}" class="btn btn-info btn-block" target="_blank" rel="noopener">
+                                    <i class="fas fa-file-pdf mr-2"></i> Unduh PDF
+                                </a>
                             </div>
                             <div class="col-md-4 mb-3">
                                 <a href="{{ route('customer.search-flights') }}" class="btn btn-outline-primary btn-block">
@@ -197,12 +197,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function printTicket() {
-            window.print();
-        }
-    </script>
 
     <style>
         .flight-details {

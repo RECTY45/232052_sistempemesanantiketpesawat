@@ -149,4 +149,42 @@ class BookingController extends Controller
         return redirect()->route('admin.bookings.index')
             ->with('success', 'Pemesanan berhasil dihapus!');
     }
+
+    /**
+     * Print bookings report as PDF
+     */
+    public function print(Request $request)
+    {
+        $query = Booking::with(['user', 'flight.airline', 'flight.departureAirport', 'flight.arrivalAirport']);
+
+        // Apply same filters as index
+        if ($request->filled('booking_code')) {
+            $query->where('booking_code', 'like', '%' . $request->booking_code . '%');
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('start_date')) {
+            $query->whereDate('created_at', '>=', $request->start_date);
+        }
+
+        if ($request->filled('end_date')) {
+            $query->whereDate('created_at', '<=', $request->end_date);
+        }
+
+        $bookings = $query->orderBy('created_at', 'desc')->get();
+
+        $stats = [
+            'total_bookings' => $bookings->count(),
+            'confirmed_bookings' => $bookings->where('status', 'confirmed')->count(),
+            'pending_bookings' => $bookings->where('status', 'pending')->count(),
+            'cancelled_bookings' => $bookings->where('status', 'cancelled')->count(),
+        ];
+
+        $title = 'Laporan Pemesanan';
+
+        return view('admin.bookings.print', compact('bookings', 'stats', 'title'));
+    }
 }

@@ -68,6 +68,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin.'], 
             
         // Bookings Management
         Route::resource('bookings', BookingController::class);
+        Route::get('bookings-print', [BookingController::class, 'print'])->name('bookings.print');
         
         // Payments Management
         Route::resource('payments', PaymentController::class);
@@ -98,6 +99,7 @@ Route::group(['prefix' => 'customer', 'middleware' => ['auth', 'checkCustomer'],
     Route::get('/booking-confirmation/{booking}', [CustomerController::class, 'bookingConfirmation'])->name('booking-confirmation');
     Route::get('/my-bookings', [CustomerController::class, 'myBookings'])->name('my-bookings');
     Route::get('/booking-details/{booking}', [CustomerController::class, 'bookingDetails'])->name('booking-details');
+    Route::get('/booking-details/{booking}/pdf', [CustomerController::class, 'downloadTicket'])->name('booking-pdf');
     Route::post('/cancel-booking/{booking}', [CustomerController::class, 'cancelBooking'])->name('cancel-booking');
 });
 
