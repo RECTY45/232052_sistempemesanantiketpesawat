@@ -13,6 +13,7 @@ use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class CustomerController extends Controller
@@ -193,11 +194,18 @@ class CustomerController extends Controller
             
             // Create passengers
             foreach ($request->passengers as $passengerData) {
+                $fullName = trim($passengerData['name']);
+                $nameParts = preg_split('/\s+/', $fullName, 2);
+
                 Passenger::create([
                     'booking_id' => $booking->id,
-                    'name' => $passengerData['name'],
-                    'phone' => $passengerData['phone'],
-                    'email' => $passengerData['email'] ?? null,
+                    'title' => 'Mr',
+                    'first_name' => $nameParts[0] ?? 'Guest',
+                    'last_name' => $nameParts[1] ?? '-',
+                    'birth_date' => now()->toDateString(),
+                    'gender' => 'male',
+                    'nationality' => 'Indonesian',
+                    'id_type' => 'ktp',
                 ]);
             }
             
@@ -219,6 +227,7 @@ class CustomerController extends Controller
             return redirect()->route('customer.payment', $booking->id)->with('success', 'Pemesanan berhasil dibuat!');
             
         } catch (\Exception $e) {
+            dd($e);
             DB::rollback();
             return back()->with('error', 'Pemesanan gagal: ' . $e->getMessage());
         }
@@ -403,7 +412,8 @@ class CustomerController extends Controller
     private function generateBookingCode()
     {
         do {
-            $code = 'BK' . date('Ymd') . strtoupper(substr(md5(uniqid()), 0, 6));
+            // Keep within DB column limit (10 chars) while keeping BK prefix
+            $code = 'BK' . Str::upper(Str::random(8));
         } while (Booking::where('booking_code', $code)->exists());
         
         return $code;

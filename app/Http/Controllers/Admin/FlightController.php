@@ -152,9 +152,13 @@ class FlightController extends Controller
     public function update(Request $request, Flight $flight)
     {
         // Custom validation rule for departure time
-        $departureValidation = 'required|date|after:departure_time';
-        if (!$flight->departure_time->isPast()) {
-            $departureValidation = 'required|date|after:now';
+        $departureValidation = 'required|date';
+
+        if ($flight->departure_time->isPast()) {
+            // Allow editing past flights but prevent moving the schedule further back
+            $departureValidation .= '|after_or_equal:' . $flight->departure_time->format('Y-m-d H:i:s');
+        } else {
+            $departureValidation .= '|after:now';
         }
 
         $validated = $request->validate([
@@ -173,6 +177,7 @@ class FlightController extends Controller
             'is_active' => 'boolean'
         ], [
             'departure_time.after' => 'Waktu keberangkatan tidak boleh di masa lalu.',
+            'departure_time.after_or_equal' => 'Waktu keberangkatan tidak boleh di masa lalu.',
             'arrival_time.after' => 'Waktu kedatangan harus setelah waktu keberangkatan.',
             'departure_airport_id.different' => 'Bandara keberangkatan dan kedatangan harus berbeda.'
         ]);
