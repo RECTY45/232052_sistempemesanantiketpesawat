@@ -137,7 +137,7 @@
                 @foreach($booking->passengers as $index => $passenger)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $passenger->name }}</td>
+                        <td>{{ $passenger->first_name . ' ' . $passenger->last_name }}</td>
                         <td>{{ $passenger->phone }}</td>
                         <td>{{ $passenger->email ?? '-' }}</td>
                     </tr>

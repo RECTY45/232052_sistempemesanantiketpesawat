@@ -75,7 +75,7 @@
                                         <span class="badge bg-info">{{ $airport->timezone }}</span>
                                     </td>
                                     <td>
-                                        @if($airport->status === 'active')
+                                        @if($airport->is_active)
                                             <span class="badge bg-success">Aktif</span>
                                         @else
                                             <span class="badge bg-danger">Tidak Aktif</span>

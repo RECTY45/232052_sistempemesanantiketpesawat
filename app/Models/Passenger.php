@@ -14,6 +14,8 @@ class Passenger extends Model
         'title',
         'first_name',
         'last_name',
+        'phone',
+        'email',
         'birth_date',
         'gender',
         'nationality',

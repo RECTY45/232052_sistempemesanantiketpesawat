@@ -17,6 +17,8 @@ return new class extends Migration
             $table->enum('title', ['Mr', 'Ms', 'Mrs', 'Dr'])->default('Mr');
             $table->string('first_name');
             $table->string('last_name');
+            $table->string('phone')->nullable();
+            $table->string('email')->nullable();
             $table->date('birth_date');
             $table->enum('gender', ['male', 'female']);
             $table->string('nationality', 100)->default('Indonesian');

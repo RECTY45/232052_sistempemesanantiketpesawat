@@ -202,6 +202,8 @@ class CustomerController extends Controller
                     'title' => 'Mr',
                     'first_name' => $nameParts[0] ?? 'Guest',
                     'last_name' => $nameParts[1] ?? '-',
+                    'phone' => $passengerData['phone'],
+                    'email' => $passengerData['email'] ?? null,
                     'birth_date' => now()->toDateString(),
                     'gender' => 'male',
                     'nationality' => 'Indonesian',
