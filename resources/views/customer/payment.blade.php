@@ -60,7 +60,8 @@
                         <h5 class="mb-0">Choose Payment Method</h5>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('customer.process-payment', $booking->id) }}" method="POST">
+                        <form action="{{ route('customer.process-payment', $booking->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
 
                             <div class="row">
@@ -105,6 +106,42 @@
                                                 <h6>E-Wallet</h6>
                                                 <small class="text-muted">GoPay, OVO, DANA</small>
                                             </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Upload Payment Proof Section -->
+                            <div class="card mt-4" id="upload_section" style="display: none;">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-upload mr-2"></i>Upload Bukti Pembayaran</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="alert alert-info">
+                                        <i class="fas fa-info-circle mr-2"></i>
+                                        Silakan upload bukti pembayaran Anda (screenshot, foto, atau scan) dalam format JPG,
+                                        PNG, atau PDF. Maksimal ukuran file 5MB.
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="payment_proof" class="form-label"><strong>Pilih File Bukti
+                                                Pembayaran</strong></label>
+                                        <input type="file" class="form-control" id="payment_proof" name="payment_proof"
+                                            accept=".jpg,.jpeg,.png,.pdf" required>
+                                        <small class="form-text text-muted">
+                                            Format yang didukung: JPG, PNG, PDF (Maksimal 5MB)
+                                        </small>
+                                        @error('payment_proof')
+                                            <div class="text-danger mt-1">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <!-- Preview area for image -->
+                                    <div id="image_preview" style="display: none;" class="mt-3">
+                                        <label class="form-label"><strong>Preview:</strong></label>
+                                        <div class="text-center">
+                                            <img id="preview_img" src="" alt="Preview" class="img-fluid rounded"
+                                                style="max-height: 300px;">
                                         </div>
                                     </div>
                                 </div>
@@ -198,6 +235,10 @@
         document.addEventListener('DOMContentLoaded', function () {
             const paymentMethods = document.querySelectorAll('input[name="payment_method"]');
             const paymentInfo = document.querySelector('.payment-info');
+            const uploadSection = document.getElementById('upload_section');
+            const paymentProofInput = document.getElementById('payment_proof');
+            const imagePreview = document.getElementById('image_preview');
+            const previewImg = document.getElementById('preview_img');
 
             paymentMethods.forEach(method => {
                 method.addEventListener('change', function () {
@@ -220,7 +261,30 @@
                         selectedDetail.style.display = 'block';
                         paymentInfo.style.display = 'block';
                     }
+
+                    // Show upload section for all payment methods
+                    uploadSection.style.display = 'block';
                 });
+            });
+
+            // Handle file upload preview
+            paymentProofInput.addEventListener('change', function () {
+                const file = this.files[0];
+                if (file) {
+                    const fileType = file.type;
+                    const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+                    if (validImageTypes.includes(fileType)) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            previewImg.src = e.target.result;
+                            imagePreview.style.display = 'block';
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        imagePreview.style.display = 'none';
+                    }
+                }
             });
         });
     </script>

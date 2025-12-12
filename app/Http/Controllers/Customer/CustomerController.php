@@ -260,6 +260,12 @@ class CustomerController extends Controller
     {
         $request->validate([
             'payment_method' => 'required|in:credit_card,bank_transfer,e_wallet',
+            'payment_proof' => 'required|file|mimes:jpg,jpeg,png,pdf|max:5120', // 5MB max
+        ], [
+            'payment_proof.required' => 'Bukti pembayaran wajib diupload.',
+            'payment_proof.file' => 'File bukti pembayaran tidak valid.',
+            'payment_proof.mimes' => 'Format file harus JPG, PNG, atau PDF.',
+            'payment_proof.max' => 'Ukuran file maksimal 5MB.',
         ]);
 
         if ($booking->user_id !== Auth::id()) {
@@ -269,27 +275,37 @@ class CustomerController extends Controller
         DB::beginTransaction();
         
         try {
+            // Handle file upload
+            $paymentProofPath = null;
+            if ($request->hasFile('payment_proof')) {
+                $file = $request->file('payment_proof');
+                $fileName = 'payment_proof_' . $booking->booking_code . '_' . time() . '.' . $file->getClientOriginalExtension();
+                $paymentProofPath = $file->storeAs('payment_proofs', $fileName, 'public');
+            }
+
             // Create payment record
             $payment = Payment::create([
                 'booking_id' => $booking->id,
                 'payment_code' => Payment::generatePaymentCode(),
                 'amount' => $booking->total_price,
                 'method' => $request->payment_method,
-                'status' => 'success',
+                'status' => 'pending', // Set to pending instead of success to wait for admin confirmation
                 'payment_date' => now(),
                 'expires_at' => now()->addHours(24),
+                'payment_proof' => $paymentProofPath,
             ]);
 
-            // Update booking status
-            $booking->update(['status' => 'confirmed']);
+            // Update booking status to pending payment verification
+            $booking->update(['status' => 'pending']);
 
             DB::commit();
 
-            return redirect()->route('customer.booking-confirmation', $booking->id)->with('success', 'Payment successful!');
+            return redirect()->route('customer.booking-confirmation', $booking->id)
+                ->with('success', 'Bukti pembayaran berhasil diupload! Pembayaran Anda sedang dalam proses verifikasi admin.');
 
         } catch (\Exception $e) {
             DB::rollback();
-            return back()->with('error', 'Payment failed: ' . $e->getMessage());
+            return back()->with('error', 'Upload bukti pembayaran gagal: ' . $e->getMessage());
         }
     }
 

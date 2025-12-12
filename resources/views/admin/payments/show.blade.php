@@ -36,7 +36,7 @@
                                     <div>
                                         @if($payment->status === 'pending')
                                             <span class="badge bg-warning fs-6">Menunggu Pembayaran</span>
-                                        @elseif($payment->status === 'completed')
+                                        @elseif($payment->status === 'success')
                                             <span class="badge bg-success fs-6">Pembayaran Selesai</span>
                                         @elseif($payment->status === 'failed')
                                             <span class="badge bg-danger fs-6">Pembayaran Gagal</span>
@@ -101,7 +101,8 @@
                                             <tr>
                                                 <td class="fw-semibold">Jumlah:</td>
                                                 <td class="text-success fw-bold">Rp
-                                                    {{ number_format($payment->amount, 0, ',', '.') }}</td>
+                                                    {{ number_format($payment->amount, 0, ',', '.') }}
+                                                </td>
                                             </tr>
                                             @if($payment->admin_fee > 0)
                                                 <tr>
@@ -122,7 +123,7 @@
                                                 <td>
                                                     @if($payment->status === 'pending')
                                                         <span class="badge bg-warning">Menunggu</span>
-                                                    @elseif($payment->status === 'completed')
+                                                    @elseif($payment->status === 'success')
                                                         <span class="badge bg-success">Selesai</span>
                                                     @elseif($payment->status === 'failed')
                                                         <span class="badge bg-danger">Gagal</span>
@@ -204,6 +205,60 @@
                                 </div>
                             </div>
                         </div>
+
+                        <!-- Payment Proof Section -->
+                        @if($payment->payment_proof)
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="mb-0">Bukti Pembayaran</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @php
+                                                $fileExtension = pathinfo($payment->payment_proof, PATHINFO_EXTENSION);
+                                                $isImage = in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png']);
+                                            @endphp
+
+                                            @if($isImage)
+                                                <div class="text-center mb-3">
+                                                    <img src="{{ asset('storage/' . $payment->payment_proof) }}"
+                                                        alt="Bukti Pembayaran" class="img-fluid rounded shadow"
+                                                        style="max-height: 400px; max-width: 100%;"
+                                                        onclick="showImageModal(this.src)">
+                                                </div>
+                                                <div class="text-center">
+                                                    <button class="btn btn-primary btn-sm"
+                                                        onclick="showImageModal('{{ asset('storage/' . $payment->payment_proof) }}')">
+                                                        <i class="bx bx-zoom-in me-1"></i>Perbesar Gambar
+                                                    </button>
+                                                    <a href="{{ asset('storage/' . $payment->payment_proof) }}"
+                                                        class="btn btn-outline-secondary btn-sm" download>
+                                                        <i class="bx bx-download me-1"></i>Download
+                                                    </a>
+                                                </div>
+                                            @else
+                                                <div class="text-center">
+                                                    <div class="mb-3">
+                                                        <i class="bx bx-file-blank" style="font-size: 48px; color: #6c757d;"></i>
+                                                    </div>
+                                                    <p class="text-muted">File bukti pembayaran ({{ strtoupper($fileExtension) }})
+                                                    </p>
+                                                    <a href="{{ asset('storage/' . $payment->payment_proof) }}"
+                                                        class="btn btn-primary" target="_blank">
+                                                        <i class="bx bx-show me-1"></i>Lihat File
+                                                    </a>
+                                                    <a href="{{ asset('storage/' . $payment->payment_proof) }}"
+                                                        class="btn btn-outline-secondary" download>
+                                                        <i class="bx bx-download me-1"></i>Download
+                                                    </a>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     <!-- Actions & Timeline -->
@@ -219,7 +274,7 @@
                                         <form action="{{ route('admin.payments.update', $payment) }}" method="POST">
                                             @csrf
                                             @method('PUT')
-                                            <input type="hidden" name="status" value="completed">
+                                            <input type="hidden" name="status" value="success">
                                             <input type="hidden" name="paid_at" value="{{ now() }}">
                                             <button type="submit" class="btn btn-success w-100">
                                                 <i class="bx bx-check me-2"></i>Konfirmasi Pembayaran
@@ -261,7 +316,8 @@
                                             <div class="timeline-content">
                                                 <h6 class="fw-semibold">Pembayaran Selesai</h6>
                                                 <p class="text-muted mb-0">
-                                                    {{ \Carbon\Carbon::parse($payment->paid_at)->format('d M Y, H:i') }}</p>
+                                                    {{ \Carbon\Carbon::parse($payment->paid_at)->format('d M Y, H:i') }}
+                                                </p>
                                                 <small
                                                     class="text-muted">{{ \Carbon\Carbon::parse($payment->paid_at)->diffForHumans() }}</small>
                                             </div>
@@ -324,5 +380,35 @@
             border: 1px solid #e3e7f3;
         }
     </style>
+
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="imageModalLabel">Bukti Pembayaran</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center">
+                    <img id="modalImage" src="" alt="Bukti Pembayaran" class="img-fluid">
+                </div>
+                <div class="modal-footer">
+                    <a id="downloadLink" href="" class="btn btn-primary" download>
+                        <i class="bx bx-download me-1"></i>Download
+                    </a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showImageModal(imageSrc) {
+            document.getElementById('modalImage').src = imageSrc;
+            document.getElementById('downloadLink').href = imageSrc;
+            var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+            imageModal.show();
+        }
+    </script>
 
 @endsection

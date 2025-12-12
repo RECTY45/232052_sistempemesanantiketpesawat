@@ -44,9 +44,9 @@ class PaymentController extends Controller
         // Statistics
         $stats = [
             'total_payments' => Payment::count(),
-            'completed_payments' => Payment::where('status', 'completed')->count(),
+            'completed_payments' => Payment::where('status', 'success')->count(),
             'pending_payments' => Payment::where('status', 'pending')->count(),
-            'total_revenue' => Payment::where('status', 'completed')->sum('amount'),
+            'total_revenue' => Payment::where('status', 'success')->sum('amount'),
         ];
         
         $title = 'Manajemen Pembayaran - Travelo Admin';
@@ -106,21 +106,29 @@ class PaymentController extends Controller
     public function update(Request $request, Payment $payment)
     {
         $validated = $request->validate([
-            'status' => 'required|in:pending,completed,failed',
+            'status' => 'required|in:pending,success,failed',
             'paid_at' => 'nullable|date',
             'notes' => 'nullable|string|max:500'
         ]);
         
-        // If status is completed and paid_at is provided, set it
-        if ($validated['status'] === 'completed' && $request->has('paid_at')) {
+        // If status is success and paid_at is provided, set it
+        if ($validated['status'] === 'success' && $request->has('paid_at')) {
             $validated['paid_at'] = $request->paid_at;
         }
         
+        // Update payment
         $payment->update($validated);
+        
+        // Update booking status based on payment status
+        if ($validated['status'] === 'success') {
+            $payment->booking->update(['status' => 'confirmed']);
+        } elseif ($validated['status'] === 'failed') {
+            $payment->booking->update(['status' => 'cancelled']);
+        }
         
         $statusText = [
             'pending' => 'menunggu',
-            'completed' => 'selesai', 
+            'success' => 'selesai', 
             'failed' => 'gagal'
         ];
         
@@ -134,7 +142,7 @@ class PaymentController extends Controller
     public function destroy(Payment $payment)
     {
         // Check if payment is completed
-        if ($payment->status === 'completed') {
+        if ($payment->status === 'success') {
             return redirect()->route('admin.payments.index')
                 ->with('error', 'Pembayaran yang sudah selesai tidak dapat dihapus.');
         }
@@ -189,7 +197,7 @@ class PaymentController extends Controller
                 $payment->booking->user->name ?? 'N/A',
                 $payment->booking->flight->airline->name ?? 'N/A',
                 'Rp ' . number_format($payment->amount, 0, ',', '.'),
-                ucfirst(str_replace('_', ' ', $payment->payment_method)),
+                ucfirst(str_replace('_', ' ', $payment->method)),
                 ucfirst($payment->status),
                 $payment->created_at->format('d/m/Y H:i')
             );

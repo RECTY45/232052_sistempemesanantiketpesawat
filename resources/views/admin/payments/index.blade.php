@@ -95,7 +95,7 @@
                                 <option value="">Semua Status</option>
                                 <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Menunggu
                                 </option>
-                                <option value="completed" {{ request('status') == 'completed' ? 'selected' : '' }}>Selesai
+                                <option value="success" {{ request('status') == 'success' ? 'selected' : '' }}>Selesai
                                 </option>
                                 <option value="failed" {{ request('status') == 'failed' ? 'selected' : '' }}>Gagal</option>
                             </select>
@@ -137,6 +137,7 @@
                                 <th>Metode</th>
                                 <th>Tanggal</th>
                                 <th>Status</th>
+                                <th>Bukti</th>
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -171,24 +172,24 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if($payment->payment_method === 'credit_card')
+                                        @if($payment->method === 'credit_card')
                                             <span class="badge bg-primary">
                                                 <i class="bx bx-credit-card me-1"></i>Kartu Kredit
                                             </span>
-                                        @elseif($payment->payment_method === 'bank_transfer')
+                                        @elseif($payment->method === 'bank_transfer')
                                             <span class="badge bg-info">
                                                 <i class="bx bx-transfer me-1"></i>Transfer Bank
                                             </span>
-                                        @elseif($payment->payment_method === 'e_wallet')
+                                        @elseif($payment->method === 'e_wallet')
                                             <span class="badge bg-warning">
                                                 <i class="bx bx-wallet me-1"></i>E-Wallet
                                             </span>
-                                        @elseif($payment->payment_method === 'cash')
+                                        @elseif($payment->method === 'cash')
                                             <span class="badge bg-success">
                                                 <i class="bx bx-money me-1"></i>Cash
                                             </span>
                                         @else
-                                            <span class="badge bg-secondary">{{ ucfirst($payment->payment_method) }}</span>
+                                            <span class="badge bg-secondary">{{ ucfirst($payment->method) }}</span>
                                         @endif
                                     </td>
                                     <td>
@@ -205,12 +206,36 @@
                                     <td>
                                         @if($payment->status === 'pending')
                                             <span class="badge bg-warning">Menunggu</span>
-                                        @elseif($payment->status === 'completed')
+                                        @elseif($payment->status === 'success')
                                             <span class="badge bg-success">Selesai</span>
                                         @elseif($payment->status === 'failed')
                                             <span class="badge bg-danger">Gagal</span>
                                         @else
                                             <span class="badge bg-secondary">{{ ucfirst($payment->status) }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        @if($payment->payment_proof)
+                                            @php
+                                                $fileExtension = pathinfo($payment->payment_proof, PATHINFO_EXTENSION);
+                                                $isImage = in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png']);
+                                            @endphp
+                                            @if($isImage)
+                                                <a href="{{ route('admin.payments.show', $payment) }}"
+                                                    class="btn btn-sm btn-outline-success" title="Ada bukti pembayaran (Gambar)">
+                                                    <i class="bx bx-image"></i>
+                                                </a>
+                                            @else
+                                                <a href="{{ route('admin.payments.show', $payment) }}"
+                                                    class="btn btn-sm btn-outline-info"
+                                                    title="Ada bukti pembayaran ({{ strtoupper($fileExtension) }})">
+                                                    <i class="bx bx-file"></i>
+                                                </a>
+                                            @endif
+                                        @else
+                                            <span class="text-muted" title="Belum ada bukti pembayaran">
+                                                <i class="bx bx-x"></i>
+                                            </span>
                                         @endif
                                     </td>
                                     <td>
@@ -240,7 +265,7 @@
                                                         <form action="{{ route('admin.payments.update', $payment) }}" method="POST">
                                                             @csrf
                                                             @method('PUT')
-                                                            <input type="hidden" name="status" value="completed">
+                                                            <input type="hidden" name="status" value="success">
                                                             <input type="hidden" name="paid_at" value="{{ now() }}">
                                                             <button type="submit" class="dropdown-item text-success">
                                                                 <i class="bx bx-check me-2"></i>Konfirmasi Bayar

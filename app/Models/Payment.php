@@ -21,7 +21,8 @@ class Payment extends Model
         'payment_date',
         'expires_at',
         'payment_details',
-        'notes'
+        'notes',
+        'payment_proof'
     ];
 
     protected $casts = [
