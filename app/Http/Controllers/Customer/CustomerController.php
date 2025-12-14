@@ -50,7 +50,7 @@ class CustomerController extends Controller
     {
         $airports = Airport::all();
         $airlines = Airline::all();
-        
+
         return view('customer.search-flights', [
             'title' => 'Cari Penerbangan',
             'name' => 'Customer',
@@ -98,7 +98,7 @@ class CustomerController extends Controller
     {
         $passengers = $request->get('passengers', 1);
         $flight_class_id = $request->get('flight_class_id');
-        
+
         // Create a simple flight class object based on the price selection
         $flight_class = null;
         if ($flight_class_id == 1) {
@@ -110,7 +110,7 @@ class CustomerController extends Controller
         } elseif ($flight_class_id == 2) {
             $flight_class = (object) [
                 'id' => 2,
-                'class_name' => 'Business', 
+                'class_name' => 'Business',
                 'price' => $flight->business_price
             ];
         } elseif ($flight_class_id == 3) {
@@ -120,7 +120,7 @@ class CustomerController extends Controller
                 'price' => $flight->first_class_price
             ];
         }
-        
+
         return view('customer.book-flight', [
             'title' => 'Book Flight',
             'name' => 'Customer',
@@ -145,17 +145,17 @@ class CustomerController extends Controller
         ]);
 
         DB::beginTransaction();
-        
+
         try {
             $flight = Flight::findOrFail($request->flight_id);
             $flightClassId = (int) $request->flight_class_id;
             $passengerCount = count($request->passengers);
-            
+
             // Determine class name and price based on flight_class_id
             $className = '';
             $classPrice = 0;
             $availableSeats = 0;
-            
+
             switch ($flightClassId) {
                 case 1:
                     $className = 'economy';
@@ -175,12 +175,12 @@ class CustomerController extends Controller
                 default:
                     return back()->with('error', 'Invalid flight class selected');
             }
-            
+
             // Check available seats
             if ($availableSeats < $passengerCount) {
                 return back()->with('error', 'Not enough available seats');
             }
-            
+
             // Create booking
             $booking = Booking::create([
                 'user_id' => Auth::id(),
@@ -191,7 +191,7 @@ class CustomerController extends Controller
                 'status' => 'pending',
                 'booking_code' => $this->generateBookingCode(),
             ]);
-            
+
             // Create passengers
             foreach ($request->passengers as $passengerData) {
                 $fullName = trim($passengerData['name']);
@@ -210,7 +210,7 @@ class CustomerController extends Controller
                     'id_type' => 'ktp',
                 ]);
             }
-            
+
             // Update available seats based on class
             switch ($flightClassId) {
                 case 1:
@@ -223,13 +223,12 @@ class CustomerController extends Controller
                     $flight->decrement('available_first_class_seats', $passengerCount);
                     break;
             }
-            
+
             DB::commit();
-            
+
             return redirect()->route('customer.payment', $booking->id)->with('success', 'Pemesanan berhasil dibuat!');
-            
+
         } catch (\Exception $e) {
-            dd($e);
             DB::rollback();
             return back()->with('error', 'Pemesanan gagal: ' . $e->getMessage());
         }
@@ -243,9 +242,9 @@ class CustomerController extends Controller
         if ($booking->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $booking->load(['flight', 'passengers']);
-        
+
         return view('customer.payment', [
             'title' => 'Payment',
             'name' => 'Customer',
@@ -273,7 +272,7 @@ class CustomerController extends Controller
         }
 
         DB::beginTransaction();
-        
+
         try {
             // Handle file upload
             $paymentProofPath = null;
@@ -317,9 +316,9 @@ class CustomerController extends Controller
         if ($booking->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $booking->load(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport', 'passengers', 'payment']);
-        
+
         return view('customer.booking-confirmation', [
             'title' => 'Booking Confirmation',
             'name' => 'Customer',
@@ -336,7 +335,7 @@ class CustomerController extends Controller
                           ->where('user_id', Auth::id())
                           ->latest()
                           ->paginate(10);
-        
+
         return view('customer.my-bookings', [
             'title' => 'Pemesanan Saya',
             'name' => 'Customer',
@@ -352,9 +351,9 @@ class CustomerController extends Controller
         if ($booking->user_id !== Auth::id()) {
             abort(403);
         }
-        
+
         $booking->load(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport', 'passengers', 'payment']);
-        
+
         return view('customer.booking-details', [
             'title' => 'Booking Details',
             'name' => 'Customer',
@@ -396,11 +395,11 @@ class CustomerController extends Controller
         }
 
         DB::beginTransaction();
-        
+
         try {
             // Update booking status
             $booking->update(['status' => 'cancelled']);
-            
+
             // Return available seats based on flight class
             switch ($booking->flight_class_id) {
                 case 1:
@@ -413,11 +412,11 @@ class CustomerController extends Controller
                     $booking->flight->increment('available_first_class_seats', $booking->passengers_count);
                     break;
             }
-            
+
             DB::commit();
-            
+
             return back()->with('success', 'Pemesanan berhasil dibatalkan');
-            
+
         } catch (\Exception $e) {
             DB::rollback();
             return back()->with('error', 'Gagal membatalkan pemesanan');
@@ -433,7 +432,7 @@ class CustomerController extends Controller
             // Keep within DB column limit (10 chars) while keeping BK prefix
             $code = 'BK' . Str::upper(Str::random(8));
         } while (Booking::where('booking_code', $code)->exists());
-        
+
         return $code;
     }
 
@@ -445,7 +444,7 @@ class CustomerController extends Controller
         do {
             $id = 'TXN' . date('YmdHis') . rand(1000, 9999);
         } while (Payment::where('transaction_id', $id)->exists());
-        
+
         return $id;
     }
 }
