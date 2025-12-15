@@ -136,15 +136,17 @@
                                                 <td><strong>{{ $booking->booking_code }}</strong></td>
                                                 <td>{{ $booking->flight->airline->name }} {{ $booking->flight->flight_number }}</td>
                                                 <td>{{ $booking->flight->departureAirport->city }} →
-                                                    {{ $booking->flight->arrivalAirport->city }}</td>
+                                                    {{ $booking->flight->arrivalAirport->city }}
+                                                </td>
                                                 <td>{{ $booking->flight->departure_time->format('M d, Y H:i') }}</td>
                                                 <td>
                                                     @if($booking->status === 'confirmed')
-                                                        <span class="badge badge-success">Confirmed</span>
+                                                        <span class="badge badge-success" style="color: green;">Confirmed</span>
                                                     @elseif($booking->status === 'pending')
-                                                        <span class="badge badge-warning">Pending</span>
+                                                        <span class="badge badge-warning" style="color: orange;">Pending</span>
                                                     @else
-                                                        <span class="badge badge-secondary">{{ ucfirst($booking->status) }}</span>
+                                                        <span class="badge badge-secondary"
+                                                            style="color: cyan">{{ ucfirst($booking->status) }}</span>
                                                     @endif
                                                 </td>
                                                 <td>
