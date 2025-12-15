@@ -370,10 +370,12 @@ class CustomerController extends Controller
             abort(403);
         }
 
-        $booking->load(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport', 'passengers', 'payment']);
+        $booking->load(['flight.airline', 'flight.departureAirport', 'flight.arrivalAirport', 'passengers', 'payments']);
+        $payment = $booking->payments()->latest()->first();
 
         $pdf = Pdf::loadView('customer.booking-pdf', [
-            'booking' => $booking
+            'booking' => $booking,
+            'payment' => $payment,
         ])->setPaper('a4');
 
         $fileName = 'tiket-' . $booking->booking_code . '.pdf';

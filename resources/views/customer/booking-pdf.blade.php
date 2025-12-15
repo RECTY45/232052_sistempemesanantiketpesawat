@@ -87,6 +87,11 @@
     </style>
 </head>
 <body>
+    @php
+        $paymentMethod = $payment ? ($payment->method ?? $payment->payment_method) : null;
+        $paymentCode = optional($payment)->payment_code;
+        $paymentStatus = optional($payment)->status;
+    @endphp
     <div class="header">
         <div>
             <p class="title">Tiket Penerbangan</p>
@@ -151,17 +156,17 @@
         <div class="grid">
             <div>
                 <p class="label">Kode Pembayaran</p>
-                <p class="value">{{ $booking->payment->payment_code ?? '-' }}</p>
+                <p class="value">{{ $paymentCode ?? '-' }}</p>
                 <p class="label">Metode</p>
                 <p class="value">
-                    {{ $booking->payment ? ucfirst(str_replace('_', ' ', $booking->payment->method)) : '-' }}
+                    {{ $paymentMethod ? ucfirst(str_replace('_', ' ', $paymentMethod)) : '-' }}
                 </p>
             </div>
             <div>
                 <p class="label">Jumlah</p>
                 <p class="value">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</p>
                 <p class="label">Status Pembayaran</p>
-                <p class="value">{{ $booking->payment ? ucfirst($booking->payment->status) : 'Pending' }}</p>
+                <p class="value">{{ $paymentStatus ? ucfirst($paymentStatus) : 'Pending' }}</p>
             </div>
         </div>
     </div>
