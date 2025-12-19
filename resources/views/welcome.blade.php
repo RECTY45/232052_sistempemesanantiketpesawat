@@ -188,7 +188,7 @@
                 <!-- Yogyakarta -->
                 <div class="group relative overflow-hidden rounded-2xl shadow-lg hover-scale" data-aos="fade-up"
                     data-aos-delay="200">
-                    <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
+                    <img src="https://4sirteameyesonly.superlive.id/storage/articles/603c049ef7d2.jpg"
                         alt="Yogyakarta"
                         class="w-full h-80 object-cover group-hover:scale-110 transition-transform duration-500">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>

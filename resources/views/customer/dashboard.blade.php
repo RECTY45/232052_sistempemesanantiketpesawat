@@ -136,10 +136,10 @@
             <div class="d-flex flex-wrap justify-content-between align-items-start">
                 <div class="pr-md-4">
                     <p class="text-white-75 mb-1 small text-uppercase">Dasbor Pelanggan</p>
-                    <h2 class="mb-2">Halo, {{ auth()->user()->name }}!</h2>
+                    <h2 class="mb-2 text-white">Halo, {{ auth()->user()->name }}!</h2>
                     <p class="mb-3 text-white-75">Pantau status pemesanan, lanjutkan pencarian, atau lakukan check-in dari
                         satu tempat.</p>
-                    <div class="d-flex flex-wrap">
+                    <div class="d-flex flex-wrap gap-3">
                         <a href="{{ route('customer.search-flights') }}" class="btn btn-light btn-sm mr-2 mb-2">
                             <i class="fas fa-search mr-1"></i> Cari Penerbangan
                         </a>
@@ -149,7 +149,7 @@
                     </div>
                 </div>
                 <div class="text-right mt-3 mt-md-0 hero-meta">
-                    <div class="badge badge-pill badge-light px-3 py-2 mb-2"
+                    <div class="badge badge-pill badge-light px-3 py-2 mb-2 bg-soft-success"
                         style="color:#0b63ce; background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.25);">
                         <i class="fas fa-check-circle mr-1"></i> Dikonfirmasi: {{ $confirmedBookings }}
                     </div>

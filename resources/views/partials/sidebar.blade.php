@@ -87,7 +87,7 @@
             <!-- AIRLINES -->
             <li class="menu-item {{request()->routeIs('admin.airlines.*') ? 'active' : ''}}">
                 <a href="{{route('admin.airlines.index')}}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-plane-alt"></i>
+                     <i class="menu-icon tf-icons bx bx-paper-plane"></i>
                     <div data-i18n="Basic">Maskapai</div>
                 </a>
             </li>
@@ -102,8 +102,8 @@
 
             <!-- AIRCRAFT -->
             <li class="menu-item {{request()->routeIs('admin.aircraft.*') ? 'active' : ''}}">
-                <a href="{{route('admin.aircraft.index')}}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-paper-plane"></i>
+                <a href="{{route('admin.aircraft.index')}}" class="menu-link  gap-3">
+                      <i class="fas fa-plane text-grey"></i>
                     <div data-i18n="Basic">Pesawat</div>
                 </a>
             </li>

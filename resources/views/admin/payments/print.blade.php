@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -105,27 +104,29 @@
             padding-top: 20px;
         }
 
+        /* Badge styling */
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 12px;
+        }
+
+        .bg-primary { background-color: #0d6efd; }
+        .bg-info { background-color: #0dcaf0; color: #fff; }
+        .bg-warning { background-color: #ffc107; color: #fff; }
+        .bg-success { background-color: #28a745; }
+        .bg-secondary { background-color: #6c757d; }
+
         @media print {
-            body {
-                margin: 0;
-            }
-
-            .header {
-                page-break-after: avoid;
-            }
-
-            table {
-                page-break-inside: auto;
-            }
-
-            tr {
-                page-break-inside: avoid;
-                page-break-after: auto;
-            }
+            body { margin: 0; }
+            .header { page-break-after: avoid; }
+            table { page-break-inside: auto; }
+            tr { page-break-inside: avoid; page-break-after: auto; }
         }
     </style>
 </head>
-
 <body>
     <div class="header">
         <h1>TRAVELO</h1>
@@ -175,10 +176,30 @@
                     <td>{{ $payment->booking->user->name ?? 'N/A' }}</td>
                     <td>{{ $payment->booking->flight->airline->name ?? 'N/A' }}</td>
                     <td>Rp {{ number_format($payment->amount, 0, ',', '.') }}</td>
-                    <td>{{ ucfirst(str_replace('_', ' ', $payment->payment_method)) }}</td>
+                    <td>
+                        @if($payment->method === 'credit_card')
+                            <span class="badge bg-primary">Kartu Kredit</span>
+                        @elseif($payment->method === 'bank_transfer')
+                            <span class="badge bg-info">Transfer Bank</span>
+                        @elseif($payment->method === 'e_wallet')
+                            <span class="badge bg-warning">E-Wallet</span>
+                        @elseif($payment->method === 'cash')
+                            <span class="badge bg-success">Cash</span>
+                        @else
+                            <span class="badge bg-secondary">{{ ucfirst($payment->method) }}</span>
+                        @endif
+                    </td>
                     <td>
                         <span class="status-{{ $payment->status }}">
-                            {{ ucfirst($payment->status) }}
+                            @if($payment->status === 'pending')
+                                 <span class="badge bg-warning">Menunggu</span>
+                            @elseif($payment->status === 'success')
+                                 <span class="badge bg-success">Selesai</span>
+                            @elseif($payment->status === 'failed')
+                                 <span class="badge bg-danger">Gagal</span>
+                            @else
+                                 <span class="badge bg-secondary">{{ ucfirst($payment->status) }}</span>
+                            @endif
                         </span>
                     </td>
                     <td>{{ $payment->created_at->format('d/m/Y H:i') }}</td>
@@ -203,5 +224,4 @@
         }
     </script>
 </body>
-
 </html>

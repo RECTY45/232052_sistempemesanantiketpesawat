@@ -1,6 +1,3 @@
-Siap Jelajahi Indonesia?
-Bergabunglah dengan ribuan traveler yang telah mempercayai Nusantara Airways untuk menjelajahi keindahan Indonesia
-<!DOCTYPE html>
 <html lang="id" class="scroll-smooth">
 
 <head>
