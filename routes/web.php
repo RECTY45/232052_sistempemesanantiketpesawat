@@ -4,9 +4,10 @@ use App\Http\Controllers\Auth\ActivateAccountController;
 use App\Http\Controllers\DashController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\Admin\AirlineController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\AirportController;
 use App\Http\Controllers\Admin\AircraftController;
 use App\Http\Controllers\Admin\FlightController;
@@ -51,25 +52,27 @@ Route::group(['prefix' => 'dashboard', 'middleware' => ['auth']], function () {
 Route::group(['prefix' => 'admin', 'middleware' => ['auth'], 'as' => 'admin.'], function () {
     // Check if user is admin middleware could be added here
     Route::middleware(['checkAdmin'])->group(function () {
-        
+
         // Airlines Management
         Route::resource('airlines', AirlineController::class);
-        
+        // Users Management (admin)
+        Route::resource('users', AdminUserController::class);
+
         // Airports Management
         Route::resource('airports', AirportController::class);
-        
+
         // Aircraft Management
         Route::resource('aircraft', AircraftController::class);
-        
+
         // Flights Management
         Route::resource('flights', FlightController::class);
         Route::get('flights/aircraft/{airline}', [FlightController::class, 'getAircraftByAirline'])
             ->name('flights.aircraft-by-airline');
-            
+
         // Bookings Management
         Route::resource('bookings', BookingController::class);
         Route::get('bookings-print', [BookingController::class, 'print'])->name('bookings.print');
-        
+
         // Payments Management
         Route::resource('payments', PaymentController::class);
         Route::get('payments-export', [PaymentController::class, 'export'])->name('payments.export');
